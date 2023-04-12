@@ -6,3 +6,7 @@
 	url  = https://gitee.com/chengxuru/pblog-admin
 	path = pblog-admin
 
+[submodule "pblog-web"]
+	url  = https://gitee.com/chengxuru/pblog-web
+	path = pblog-web
+
