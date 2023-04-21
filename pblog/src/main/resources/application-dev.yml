@@ -1,0 +1,184 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3366/pblog?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&tinyInt1isBit=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size: 10
+    max-active: 150
+    min-idle: 10
+    max-wait: 5000
+    pool-prepared-statements: false
+    validation-query: SELECT 1
+    validation-query-timeout: 500
+    test-on-borrow: false
+    test-on-return: false
+    test-while-idle: true
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 30000
+    filters: stat,wall,log4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+  elasticsearch:
+    rest:
+      uris: localhost:9200
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000
+    password:
+
+#==============================IP限流次数和时间配置==============================
+IpLimit:
+  #请求次数
+  count: 10
+  #请求时间
+  time: 10
+
+#==============================线程池配置==============================
+task:
+  executor:
+    core_pool_size: 10
+    max_pool_size: 200
+    queue_capacity: 1200
+    keep_alive_seconds: 60
+
+#==============================Sa-Token配置==============================
+sa-token:
+  # token名称 (同时也是cookie名称)
+  token-name: Authorization
+  # token有效期，单位s 默认30天, -1代表永不过期
+  timeout: 3600
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+  activity-timeout: -1
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: false
+  # token风格
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: false
+
+#==============================mybatis-plus配置==============================
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.rulin.entity
+  global-config:
+    # 数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      db-type: mysql
+    #刷新mapper 调试神器
+    refresh: true
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+logging:
+  level:
+    root: warn
+#    com.rulin.mapper: debug
+
+#==============================knife4j配置=======================================
+knife4j:
+  # 开启增强配置
+  enable: true
+  basic:
+    enable: false
+    # Basic认证用户名
+    username: admin
+    # Basic认证密码
+    password: admin
+
+#============================第三方登录配置信息===================================
+qq:
+  app-id: 123456789
+  check-token-url: https://graph.qq.com/oauth2.0/me?access_token={access_token}
+  user-info-url: https://graph.qq.com/user/get_user_info?openid={openid}&access_token={access_token}&oauth_consumer_key={oauth_consumer_key}
+weibo:
+  app-id: 132456
+  app-secret: a380fef0743e38cad12125902b204fab
+  grant-type: authorization_code
+  redirect-url: http://www.codescholar.cn/rulin/callback/weibo
+  access-token-url: https://api.weibo.com/oauth2/access_token
+  user-info-url: https://api.weibo.com/2/users/show.json?uid={uid}&access_token={access_token}
+gitee:
+  app-id: d029
+  app-secret: e94dfa5
+  grant-type: authorization_code
+  redirect-url: http://www.codescholar.cn/rulin/callback/gitee
+  access-token-url: https://gitee.com/oauth/token
+  user-info-url: https://gitee.com/api/v5/user?access_token={access_token}
+baidu:
+  url: http://data.zz.baidu.com/urls?site=www.codescholar.cn&token=XKeIRVpUvz5KuKBG
+file:
+  upload-folder: /usr/local/pblog/file/
+
+
+#============================AJ-Captcha 滑块验证码===================================
+aj:
+  captcha:
+    jigsaw: classpath:images/jigsaw
+    #滑动验证，底图路径，不配置将使用默认图片
+    ##支持全路径
+    # 支持项目路径,以classpath:开头,取resource目录下路径,例：classpath:images/pic-click
+    pic-click: classpath:images/pic-click
+    # 对于分布式部署的应用，我们建议应用自己实现CaptchaCacheService，比如用Redis或者memcache，
+    # 参考CaptchaCacheServiceRedisImpl.java
+    # 如果应用是单点的，也没有使用redis，那默认使用内存。
+    # 内存缓存只适合单节点部署的应用，否则验证码生产与验证在节点之间信息不同步，导致失败。
+    # ！！！ 注意啦，如果应用有使用spring-boot-starter-data-redis，
+    # 请打开CaptchaCacheServiceRedisImpl.java注释。
+    # redis ----->  SPI： 在resources目录新建META-INF.services文件夹(两层)，参考当前服务resources。
+    # 缓存local/redis...
+    cache-type: redis
+    # local缓存的阈值,达到这个值，清除缓存
+    cache-number: 1000
+    # local定时清除过期缓存(单位秒),设置为0代表不执行
+    timing-clear: 180
+    # 验证码类型default两种都实例化。
+    type: default
+    # 汉字统一使用Unicode,保证程序通过@value读取到是中文，可通过这个在线转换;yml格式不需要转换
+    # https://tool.chinaz.com/tools/unicode.aspx 中文转Unicode
+    # 右下角水印文字(我的水印)
+    water-mark: 儒林小栈
+    # 右下角水印字体(不配置时，默认使用文泉驿正黑)
+    # 由于宋体等涉及到版权，我们jar中内置了开源字体【文泉驿正黑】
+    # 方式一：直接配置OS层的现有的字体名称，比如：宋体
+    # 方式二：自定义特定字体，请将字体放到工程resources下fonts文件夹，支持ttf\ttc\otf字体
+    # aj.captcha.water-font=WenQuanZhengHei.ttf
+    # 点选文字验证码的文字字体(文泉驿正黑)
+    # aj.captcha.font-type=WenQuanZhengHei.ttf
+    # 校验滑动拼图允许误差偏移量(默认5像素)
+    slip-offset: 5
+    # aes加密坐标开启或者禁用(true|false)
+    aes-status: true
+    # 滑动干扰项(0/1/2)
+    interference-options: 1
+
+    history-data-clear-enable: true
+
+    # 接口请求次数一分钟限制是否开启 true|false
+    req-frequency-limit-enable: true
+    # 验证失败5次，get接口锁定
+    req-get-lock-limit: 5
+    # 验证失败后，锁定时间间隔,s
+    req-get-lock-seconds: 60
+    # get接口一分钟内请求数限制
+    req-get-minute-limit: 30
+    # check接口一分钟内请求数限制
+    req-check-minute-limit: 60
+    # verify接口一分钟内请求数限制
+    req-verify-minute-limit: 60

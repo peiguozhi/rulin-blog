@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.TagsMapper">
+
+    <delete id="deleteByArticleIds">
+        DELETE FROM b_article_tag WHERE article_id in
+            <foreach collection="ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+    </delete>
+
+    <select id="selectByArticleId" resultType="java.lang.String">
+        select name from b_tags where id in(select tag_id from b_article_tag where article_id=#{articleId})
+    </select>
+
+    <select id="findByArticleIdToTags" resultType="com.rulin.vo.TagVO">
+        select id,name from b_tags where id in (select tag_id from b_article_tag where article_id=#{articleId})
+    </select>
+
+    <select id="selectPageRecord" resultType="com.rulin.entity.Tags">
+        select a.id,a.name,a.sort,a.click_volume,a.create_time,b.articleCount from b_tags a
+            left join (select tag_id,count(id) as articleCount from b_article_tag GROUP BY tag_id) b on a.id=b.tag_id
+        <where>
+            <if test="name != null">
+                a.name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="saveArticleTags">
+        insert ignore into  b_article_tag(article_id,tag_id) values
+        <foreach collection="tags" item="tagsId" index="index" separator=",">
+            ( #{articleId},#{tagsId})
+        </foreach>
+    </insert>
+
+    <select id="countTags" resultType="java.util.Map">
+        select id,name from b_tags
+    </select>
+    <select id="selectAll" resultType="com.rulin.vo.TagVO">
+        select id,name from b_tags order by sort desc
+    </select>
+
+</mapper>

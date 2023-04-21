@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.QuestionMapper">
+
+    <select id="selectQuestion" resultType="com.rulin.vo.QuestionListVO">
+        SELECT
+            a.*,
+            b.NAME AS qCategoryName
+        FROM
+            b_question a
+        JOIN 
+            b_q_category b 
+        ON a.q_category_id = b.id
+        <where>
+            <if test="param.quContent != null and param.quContent != ''">
+                a.qu_content like concat('%',#{param.quContent},'%')
+            </if>
+            <if test="param.qCategoryId != null and param.qCategoryId != ''">
+                and a.q_category_id=#{param.qCategoryId}
+            </if>
+            <if test="param.isPublish != null and param.isPublish.toString() != ''">
+                and a.is_publish=#{param.isPublish}
+            </if>
+        </where>
+        GROUP BY a.id order by a.sort ASC ,a.create_time ASC
+    </select>
+
+    <select id="selectPrimaryKey" resultType="com.rulin.dto.QuestionDTO">
+        SELECT a.id,
+               a.user_id,
+               a.qu_content,
+               a.quantity,
+               a.analysis,
+               a.analysis_md,
+               a.sort,
+               a.is_publish,
+               a.quantity,
+               a.create_time,
+               b.name AS qCategoryName
+        FROM b_question a
+                 LEFT JOIN (SELECT id, name FROM b_q_category) b ON a.q_category_id = b.id
+        WHERE a.id = #{id}
+    </select>
+
+
+    <update id="publishAndShelf">
+        UPDATE b_question
+        SET is_publish=#{question.isPublish}
+        WHERE id = #{question.id}
+    </update>
+
+    <select id="selectPreviewQuestion" resultType="com.rulin.vo.QuestionVO">
+        SELECT
+            id,
+            qu_content,
+            analysis_md
+        FROM
+            b_question
+        WHERE
+            is_publish = 1 and q_category_id=#{cid}
+    </select>
+
+</mapper>

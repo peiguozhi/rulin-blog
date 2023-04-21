@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.CommentMapper">
+
+    <select id="selectPageList" resultType="com.rulin.vo.SystemCommentVO">
+        SELECT
+            c.id,
+            au.avatar,
+            au.nickname,
+            IF(rau.nickname is null,'无',rau.nickname) as replyNickname,
+            a.title as articleTitle,
+            c.content,
+            c.create_time
+        FROM
+            b_comment c
+                LEFT JOIN ( SELECT id, user_auth_id FROM b_user ) u ON c.user_id = u.id
+                LEFT JOIN ( SELECT id, avatar, nickname FROM b_user_auth ) au ON u.user_auth_id = au.id
+                LEFT JOIN ( SELECT id, title FROM b_article ) a ON c.article_id = a.id
+                LEFT JOIN ( SELECT id, user_auth_id FROM b_user ) ru ON c.reply_user_id = ru.id
+                LEFT JOIN ( SELECT id, avatar, nickname FROM b_user_auth ) rau ON ru.user_auth_id = rau.id
+        <where>
+            <if test="keywords != null and keywords != ''">
+                au.nickname like concat('%',#{keywords},'%') or rau.nickname like concat('%',#{keywords},'%')
+            </if>
+        </where>
+        order by c.create_time desc
+    </select>
+
+    <select id="listComments" resultType="com.rulin.vo.CommentVO">
+        SELECT
+        u.nickname,
+        u.avatar,
+        c.user_id,
+        c.id,
+        c.content,
+        c.create_time
+        FROM
+        b_comment c
+        JOIN b_user_info u ON c.user_id = u.id
+        WHERE
+        <if test="articleId != null">
+            c.article_id = #{articleId}
+        </if>
+        <if test="articleId == null">
+            c.article_id IS NULL
+        </if>
+        AND c.parent_id IS NULL
+        ORDER BY
+        c.id DESC
+        LIMIT #{page},#{size}
+    </select>
+
+    <select id="listReplies" resultType="com.rulin.vo.ReplyVO">
+        SELECT
+            c.id,
+            c.user_id,
+            au.nickname,
+            au.avatar,
+            c.reply_user_id,
+            a.nickname AS reply_nickname,
+            c.parent_id,
+            c.content,
+            c.create_time
+        FROM b_comment c left JOIN b_user u ON c.user_id = u.id
+                       left  JOIN b_user r ON c.reply_user_id = r.id
+            left  JOIN b_user_auth a ON a.id = r.user_auth_id
+            left  JOIN b_user_auth au ON au.id = u.user_auth_id
+        WHERE
+            c.parent_id =#{id} limit 3
+    </select>
+
+    <select id="listReplyCountByCommentId" resultType="com.rulin.vo.ReplyCountVO">
+        SELECT
+        parent_id as comment_id,
+        count(1) AS reply_count
+        FROM
+        b_comment
+        WHERE
+        parent_id =#{id} GROUP BY parent_id
+    </select>
+</mapper>

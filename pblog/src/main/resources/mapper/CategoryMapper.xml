@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.CategoryMapper">
+    <select id="countArticle" resultType="com.rulin.vo.CategoryCountVO">
+        select a.name,count(b.id) as value from b_category a left join b_article b on a.id=b.category_id GROUP BY a.id
+    </select>
+
+    <select id="selectCategory" resultType="com.rulin.entity.Category">
+        select a.id,a.name,a.sort,a.create_time,a.click_volume,b.articleCount from b_category a
+            left join (select category_id,count(id) as articleCount from b_article group by category_id) b on a.id=b.category_id
+        <where>
+            <if test="name != null">
+                a.name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAll" resultType="com.rulin.vo.CategoryVO">
+        select c.id,c.name,count(b.id) as articleNum
+        from b_category c left join b_article b on c.id=b.category_id group by c.id order by c.sort desc
+    </select>
+
+</mapper>

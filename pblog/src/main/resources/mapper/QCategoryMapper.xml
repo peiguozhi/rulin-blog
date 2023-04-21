@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.QCategoryMapper">
+    <select id="countQuestion" resultType="com.rulin.vo.QCategoryCountVO">
+        select a.name,count(b.id) as value from b_q_category a left join b_question b on a.id=b.q_category_id GROUP BY a.id
+    </select>
+
+    <select id="selectQCategory" resultType="com.rulin.entity.QCategory">
+        select a.id,a.name,a.sort,a.create_time,a.click_volume,b.questionCount from b_q_category a
+            left join (select q_category_id,count(id) as questionCount from b_question group by q_category_id) b on a.id=b.q_category_id
+        <where>
+            <if test="name != null">
+                a.name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAll" resultType="com.rulin.vo.QCategoryVO">
+        SELECT
+            c.id,
+            c.name,
+            count(b.id) AS questionnum
+        FROM b_q_category c
+                 LEFT JOIN
+             b_question b
+             ON c.id = b.q_category_id
+        GROUP BY c.id
+        HAVING questionnum != 0
+        ORDER BY c.sort ASC
+    </select>
+
+</mapper>

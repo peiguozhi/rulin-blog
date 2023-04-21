@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.FriendLinkMapper">
+
+    <select id="getMaxSort" resultType="java.lang.Integer">
+        select max(sort) from b_friend_link
+    </select>
+    <update id="top">
+        update b_friend_link set sort=#{sort} where id=#{id}
+    </update>
+
+    <select id="selectLinkList" resultType="com.rulin.vo.FriendLinkVO">
+        select name,avatar,url,info,sort from b_friend_link where status=#{status} order by sort desc
+    </select>
+</mapper>

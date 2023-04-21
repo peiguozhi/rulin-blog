@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.ArticleMapper">
+
+    <select id="selectArticle" resultType="com.rulin.vo.ArticleListVO">
+        SELECT
+            a.*,
+            b.NAME AS categoryName,
+            group_concat( t.NAME SEPARATOR ',' ) AS tagNames
+            FROM
+            b_article a
+        JOIN b_category b ON a.category_id = b.id
+        JOIN b_article_tag atg ON a.id = atg.article_id
+        JOIN b_tags t ON atg.tag_id = t.id
+        <where>
+            <if test="param.title != null and param.title != ''">
+                a.title like concat('%',#{param.title},'%')
+            </if>
+             <if test="param.categoryId != null and param.categoryId != ''">
+                 and a.category_id=#{param.categoryId}
+            </if>
+            <if test="param.isPublish != null and param.isPublish.toString() != ''">
+                 and a.is_publish=#{param.isPublish}
+            </if>
+            <if test="param.tagId != null and param.tagId != ''">
+                and atg.tag_id=#{param.tagId}
+            </if>
+        </where>
+        GROUP BY a.id order by a.is_stick desc ,a.create_time desc
+    </select>
+
+    <select id="selectPrimaryKey" resultType="com.rulin.dto.ArticleDTO">
+        select a.id,a.title,a.avatar,a.summary,a.quantity,a.content,a.content_md,a.is_secret,a.is_stick,a.is_publish,a.is_original,a.original_url,
+               a.remark,a.create_time,a.keywords,b.name as categoryName from b_article a
+                                                                                 LEFT JOIN (SELECT id,name from b_category) b on a.category_id=b.id where a.id=#{id}
+    </select>
+
+    <select id="contribute" resultType="com.rulin.vo.ContributeVO">
+        select count,date from
+        (SELECT
+            count(id) as count,
+            DATE_FORMAT(create_time,'%Y-%m-%d') as date,
+            create_time
+        FROM
+            `b_article`
+        where DATE_FORMAT(create_time,'%Y-%m-%d') between #{lastTime} and #{nowTime}
+        GROUP BY
+            `create_time`) AS blog
+        ORDER BY blog.create_time ASC
+    </select>
+    <select id="listRecommendArticles" resultType="com.rulin.vo.LatestArticleVO">
+        SELECT
+            id,
+            title,
+            avatar,
+            create_time
+        FROM
+            (
+                SELECT DISTINCT
+                    article_id
+                FROM
+                        ( SELECT tag_id FROM b_article_tag WHERE article_id = #{articleId} ) t
+                            JOIN b_article_tag t1 ON t.tag_id = t1.tag_id
+                WHERE
+                    article_id != #{articleId}
+            ) t2
+                JOIN b_article a ON t2.article_id = a.id
+        WHERE a.is_publish = 1
+        ORDER BY
+            is_stick DESC,id DESC
+            LIMIT 6
+    </select>
+
+    <select id="getNextOrLastArticle" resultType="com.rulin.vo.LatestArticleVO">
+        select id,title,avatar from b_article where is_publish=#{publish}
+        <choose>
+            <when test="type == 0">
+              and id &lt; #{id} order by id desc
+            </when>
+            <otherwise>
+                and id &gt; #{id} order by id Asc
+            </otherwise>
+        </choose>
+         limit 1
+    </select>
+    <select id="getNewArticles" resultType="com.rulin.vo.LatestArticleVO">
+        select id,title,avatar,create_time from b_article where is_publish=#{publish} and id != #{id}
+        order by id desc limit 5
+    </select>
+
+
+
+    <select id="selectPrimaryKeyById" resultType="com.rulin.vo.ArticleInfoVO">
+        select * from b_article where id=#{id}
+    </select>
+
+    <select id="selectPreviewPage" resultType="com.rulin.vo.ArticlePreviewVO">
+        SELECT
+        a.id AS id,
+        a.title AS title,
+        a.avatar AS avatar,
+        a.content_md AS contentMd,
+        a.is_stick AS isStick,
+        a.create_time AS createTime,
+        c.id AS categoryId,
+        c.name AS categoryName
+        FROM b_article a JOIN b_category c ON a.category_id = c.id
+        WHERE a.is_publish = #{publish}
+        <if test = "categoryId != null" >
+            AND a.category_id = #{categoryId}
+        </if>
+        <if test = "tagId != null" >
+            AND a.id IN (
+            SELECT
+            article_id
+            FROM
+            b_article_tag
+            WHERE
+            tag_id = #{tagId})
+        </if>
+        ORDER BY a.is_stick DESC,a.create_time desc
+    </select>
+
+    <select id="selectArchivePage" resultType="com.rulin.vo.ArticlePreviewVO">
+        select id,title,create_time from b_article where is_publish=#{publish} order by create_time desc,is_stick asc
+    </select>
+
+    <update id="publishAndShelf">
+        update b_article set is_publish=#{article.isPublish} where id =#{article.id}
+    </update>
+
+    <update id="putTopArticle">
+        update b_article set is_stick = #{article.isStick} where id = #{article.id}
+    </update>
+
+</mapper>

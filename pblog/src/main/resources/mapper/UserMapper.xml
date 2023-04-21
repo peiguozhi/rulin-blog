@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.UserMapper">
+    <insert id="insertBackId" keyProperty="id" useGeneratedKeys="true">
+        insert into b_user(username,password,nick_name,avatar,pwd,created_time) values(#{username},#{password},#{nickName}
+        ,#{avatar},#{pwd},#{createdTime})
+    </insert>
+
+    <select id="getMenuId" resultType="java.lang.Integer">
+        select menu_id from b_role_menu where role_id =
+           (select role_id from b_user_role where user_id=(select id from b_user where id=#{userId}))
+    </select>
+
+    <select id="selectPageRecord" resultType="com.rulin.vo.UserVO">
+        select a.id,b.avatar,b.nickname,a.login_type,a.role_id,a.ip_address,a.ip_source,a.last_login_time,a.create_time,a.status from b_user a left join (select id,avatar,nickname from b_user_auth) b on a.user_auth_id=b.id
+        <where>
+            <if test="username != null and username != ''">
+                b.nickname like concat('%',#{username},'%')
+            </if>
+            <if test="loginType != null and loginType != ''">
+                and a.login_type=#{loginType}
+            </if>
+        </where>
+        order by a.create_time asc
+    </select>
+
+    <select id="getById" resultType="com.rulin.vo.SystemUserVO">
+        select a.id,a.username,a.role_id,a.status,b.nickname,b.avatar from b_user a left join (select id,nickname,avatar from b_user_auth) b on a.user_auth_id=b.id
+        where a.id = #{id}
+    </select>
+
+    <select id="selectNameAndPassword" resultType="com.rulin.entity.User">
+        select a.id,a.username,a.role_id,a.status,b.nickname,b.avatar from b_user a left join (select id,nickname,avatar from b_user_auth) b on a.user_auth_id=b.id
+        where username=#{username} and password=#{password}
+    </select>
+
+    <update id="updateLoginInfo">
+        update b_user set last_login_time = now(),ip_address=#{ip},ip_source=#{cityInfo},os=#{os},browser=#{browser} where id=#{loginId}
+    </update>
+
+</mapper>

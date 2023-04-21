@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.RoleMapper">
+    <select id="queryByUserId" resultType="java.lang.Integer">
+        select role_id
+        from b_user_role
+        where user_id = #{userId}
+    </select>
+    <select id="queryByRoleMenu" resultType="java.lang.Integer">
+        select menu_id
+        from b_role_menu
+        where role_id = #{roleId}
+    </select>
+    <delete id="delByRoleId">
+        DELETE
+        FROM b_role_menu
+        WHERE role_id = #{roleId}
+        <if test="menus != null">
+            and menu_id in
+            <foreach collection="menus" item="menuId" index="index"  open="(" separator=","  close=")">
+                #{menuId}
+            </foreach>
+        </if>
+
+    </delete>
+    <insert id="insertBatchByRole">
+        insert ignore into  b_role_menu(role_id,menu_id) values
+        <foreach collection="menus" item="menuId" index="index" separator=",">
+            ( #{roleId},#{menuId})
+        </foreach>
+    </insert>
+
+    <select id="selectByUserId" resultType="java.lang.String">
+        select code from b_role where id =(select role_id from b_user where id=#{loginId})
+    </select>
+</mapper>

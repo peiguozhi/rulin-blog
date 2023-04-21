@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rulin.mapper.UserAuthMapper">
+
+
+    <delete id="deleteByUserIds" >
+      delete from b_user_auth where id in (
+          select user_auth_id from b_user where id in
+        <foreach collection="ids" item="userId" open="(" separator=","  close=")" >
+            #{userId}
+        </foreach>)
+    </delete>
+
+    <select id="getByUserId" resultType="com.rulin.entity.UserAuth">
+        select * from b_user_auth where id=(select user_auth_id from b_user where id=#{loginId})
+    </select>
+
+</mapper>
