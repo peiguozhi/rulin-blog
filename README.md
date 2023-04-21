@@ -2,10 +2,9 @@
 
 <p align=center>
   <a href="http://www.codescholar.cn">
-    <img src="./README.assets/me.jpg" alt="儒林小栈" width="150px" style="border-radius: 50%">
+    <img src="./README.assets/me.png" alt="儒林小栈" width="150px">
   </a>
 </p>
-
 
 
 
@@ -21,8 +20,7 @@
       <img src="https://img.shields.io/badge/elasticsearch-7.9.2-green"/>
    </a>
 </p>
-
-[项目介绍](#项目介绍) | [站点演示](#站点演示) | [项目特点](#项目特点) | [项目目录](#项目目录)  | [环境搭建](#环境搭建)  | [未来计划](#未来计划)  
+[儒林小栈](#儒林小栈) |[项目介绍](#项目介绍) | [站点演示](#站点演示) | [项目特点](#项目特点) | [项目目录](#项目目录)  | [环境搭建](#环境搭建)  | [未来计划](#未来计划)  
 
 ## 项目介绍
 
