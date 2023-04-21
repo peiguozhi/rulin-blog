@@ -2,9 +2,10 @@
 
 <p align=center>
   <a href="http://www.codescholar.cn">
-    <img src="http://img.codescholar.cn/9a0a3a57c52d409f8a1f9fe5b27077d2.jpg" alt="儒林小栈" width="150px" style="border-radius: 50%">
+    <img src="./README.assets/me.jpg" alt="儒林小栈" width="150px" style="border-radius: 50%">
   </a>
 </p>
+
 
 
 
@@ -25,7 +26,7 @@
 
 ## 项目介绍
 
-儒林小栈( **pBlog** )，一个**基于微服务架构的前后端分离博客系统**。**前端**使用 **Vue** + **ElementUi** **。后端使用 ** **SpringBoot** + **Mybatis-plus**进行开发，使用 **sa-token** 做登录验证和权限校验，使用 **ElasticSearch**作为全文检索服务，文件支持**上传本地**、**七牛云** 和 **阿里云OSS**.
+**儒林小栈( pblog )**，一个**基于微服务架构的前后端分离博客系统**。前端使用 **Vue + ElementUi**。后端使用 **SpringBoot + Mybatis-plus**进行开发，使用 **sa-token** 做登录验证和权限校验，使用 **ElasticSearch**作为全文检索服务，文件支持**上传本地、七牛云 和 阿里云OSS**
 
 - 儒林小栈是我在其他博客的基础上改造而来，因能力有限，其中很多技术都是一边学习一边使用的，可以说儒林小栈也是一个我用来熟悉技术的项目，所以很多地方可能考虑不周，故有能改正的地方，还请各位老哥能够指出~
 - 现在挺多是SSM或者SSH的博客管理系统，想用 **SpringBoot**+ **Vue** 的微服务架构进行尝试项目的构建，里面很多功能可能只是**为了满足自己的学习需求**而引入的，大家可以**根据自己服务器配置来选择启动的服务**，因此本博客也是一个非常好的 **SpringBoot**以及 **Vue** 技术的入门学习项目。
@@ -241,9 +242,9 @@ pblog
 
 ### 后台
 
-| ![image-20230421151848790](README.assets\image-20230421151848790.png) | ![image-20230421151924326](README.assets\image-20230421151924326.png) |
+| ![image-20230421151848790](README.assets/image-20230421151848790.png) | ![image-20230421151924326](README.assets/image-20230421151924326.png) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![image-20230421151815027](README.assets\image-20230421151815027.png) | ![image-20230421152140954](README.assets/image-20230421152140954.png) |
+| ![image-20230421151815027](README.assets/image-20230421151815027.png) | ![image-20230421152140954](README.assets/image-20230421152140954.png) |
 | ![image-20230421152257038](README.assets/image-20230421152257038.png) | ![image-20230421152311674](README.assets/image-20230421152311674.png) |
 | ![image-20230421152326797](README.assets/image-20230421152326797.png) | ![image-20230421152338715](README.assets/image-20230421152338715.png) |
 | ![image-20230421152420066](README.assets/image-20230421152420066.png) | ![image-20230421152433741](README.assets/image-20230421152433741.png) |
