@@ -1,7 +1,3 @@
-[submodule "pblog"]
-	url  = https://gitee.com/chengxuru/pblog
-	path = pblog
-
 [submodule "pblog-admin"]
 	url  = https://gitee.com/chengxuru/pblog-admin
 	path = pblog-admin
