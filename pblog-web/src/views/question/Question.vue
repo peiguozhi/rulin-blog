@@ -534,6 +534,11 @@
   }
 
 
+  /* 单行代码样式 */
+  .markdown-body code{
+    background-color: #21252B;
+  }
+
   .hljs-ln {
     display: inline-block;
     overflow-x: auto;

@@ -1027,101 +1027,231 @@ hr {
 </style>
 
 <style lang="scss">
-pre.hljs {
-  padding: 12px 2px 12px 40px !important;
-  border-radius: 5px !important;
-  position: relative;
-  font-size: 16px !important;
-  line-height: 22px !important;
-  overflow: hidden !important;
+  pre.hljs {
+    padding: 30px 2px 12px 40px !important;
+    border-radius: 5px !important;
+    position: relative;
+    font-size: 17px !important;
+    line-height: 22px !important;
+    overflow: hidden !important;
+    background: #21252B !important;
+    color: #f8f8f8 !important;
+    box-shadow: 20px 10px 25px 0 rgb(0 0 0 / 10%);
+    font-family: "Consolas", serif !important;
 
-  &:hover .copy-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  code {
-    display: block !important;
-    margin: 0 10px !important;
-    overflow-x: auto !important;
-
-    &::-webkit-scrollbar {
-      z-index: 11;
-      width: 6px;
+    &:hover .copy-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    &::-webkit-scrollbar:horizontal {
-      height: 6px;
-    }
+    code {
+      display: block !important;
+      margin: 0 10px !important;
+      overflow-x: auto !important;
+      font-family: "Consolas", serif !important;
+      background-color: rgb(33 37 43 / 100%) !important;
 
-    &::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      width: 6px;
-      background: #666;
-    }
+      &::-webkit-scrollbar {
+        z-index: 11;
+        width: 6px;
+      }
 
-    &::-webkit-scrollbar-corner,
-    &::-webkit-scrollbar-track {
-      background: #1e1e1e;
-    }
+      &::-webkit-scrollbar:horizontal {
+        height: 6px;
+      }
 
-    &::-webkit-scrollbar-track-piece {
-      background: #1e1e1e;
-      width: 6px;
-    }
-  }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        width: 6px;
+        background: #666;
+      }
 
-  .line-numbers-rows {
-    position: absolute;
-    pointer-events: none;
-    top: 12px;
-    bottom: 12px;
-    left: 0;
-    font-size: 100%;
-    width: 40px;
-    text-align: center;
-    letter-spacing: -1px;
-    border-right: 1px solid rgba(0, 0, 0, 0.66);
-    user-select: none;
-    counter-reset: linenumber;
+      &::-webkit-scrollbar-corner,
+      &::-webkit-scrollbar-track {
+        background: #1e1e1e;
+      }
 
-    span {
-      pointer-events: none;
-      display: block;
-      counter-increment: linenumber;
-
-      &:before {
-        content: counter(linenumber);
-        color: #999;
-        display: block;
-        text-align: center;
+      &::-webkit-scrollbar-track-piece {
+        background: #1e1e1e;
+        width: 6px;
       }
     }
+
+    .line-numbers-rows {
+      position: absolute;
+      pointer-events: none;
+      top: 12px;
+      bottom: 12px;
+      left: 0;
+      font-size: 100%;
+      width: 40px;
+      text-align: center;
+      letter-spacing: -1px;
+      border-right: 1px solid rgba(0, 0, 0, 0.66);
+      user-select: none;
+      counter-reset: linenumber;
+
+      span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+
+        &:before {
+          content: counter(linenumber);
+          color: #999;
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+
+    b.name {
+      position: absolute;
+      top: 7px;
+      right: 45px;
+      z-index: 1;
+      color: #999;
+      pointer-events: none;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      z-index: 1;
+      color: #ccc;
+      background-color: #525252;
+      border-radius: 6px;
+      display: none;
+      font-size: 16px;
+      width: 32px;
+      height: 24px;
+      outline: none;
+    }
   }
 
-  b.name {
-    position: absolute;
-    top: 7px;
-    right: 45px;
-    z-index: 1;
-    color: #999;
-    pointer-events: none;
+  /* 单行代码样式 */
+  .markdown-body code{
+    background-color: #21252B;
   }
 
-  .copy-btn {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    z-index: 1;
-    color: #ccc;
-    background-color: #525252;
-    border-radius: 6px;
-    display: none;
-    font-size: 16px;
-    width: 32px;
-    height: 24px;
-    outline: none;
+  .hljs-ln {
+    display: inline-block;
+    overflow-x: auto;
+    padding-bottom: 5px
   }
-}
+
+  .hljs-ln td {
+    padding: 0;
+    background-color: #21252B
+  }
+
+  .hljs-ln::-webkit-scrollbar {
+    height: 10px;
+    border-radius: 5px;
+    background: #333;
+  }
+
+  .hljs-ln::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 5px;
+  }
+
+  .hljs-ln::-webkit-scrollbar-thumb:hover {
+    background: #ddd;
+  }
+
+  .hljs table tbody tr {
+    border: none
+  }
+
+  .hljs .hljs-ln-line {
+    padding: 1px 10px;
+    border: none
+  }
+
+  td.hljs-ln-line.hljs-ln-numbers {
+    border-right: 1px solid #666;
+  }
+
+  .hljs-keyword, .hljs-literal, .hljs-symbol, .hljs-name {
+    color: #f92672
+  }
+
+  .hljs-link {
+    color: #569cd6;
+    text-decoration: underline
+  }
+
+  .hljs-built_in, .hljs-type {
+    color: #66d9ef
+  }
+
+  .hljs-number, .hljs-class {
+    color: #b8d7a3
+  }
+
+  .hljs-string, .hljs-meta-string {
+    color: #E6DB74
+  }
+
+  .hljs-regexp, .hljs-template-tag {
+    color: #9a5334
+  }
+
+  .hljs-subst, .hljs-function, .hljs-title, .hljs-params, .hljs-formula {
+    color: #66d9ef
+  }
+
+  /*注释颜色*/
+  /*  .hljs-comment, .hljs-quote {
+      color: #57a64a;
+      font-style: italic
+    }*/
+
+  .hljs-doctag {
+    color: #608b4e
+  }
+
+  .hljs-meta, .hljs-meta-keyword, .hljs-tag {
+    color: #9b9b9b
+  }
+
+  .hljs-variable, .hljs-template-variable {
+    color: #bd63c5
+  }
+
+  .hljs-attr, .hljs-attribute, .hljs-builtin-name {
+    color: #9cdcfe
+  }
+
+  .hljs-section {
+    color: gold
+  }
+
+  .hljs-emphasis {
+    font-style: italic
+  }
+
+  .hljs-strong {
+    font-weight: bold
+  }
+
+  .hljs-bullet, .hljs-selector-tag, .hljs-selector-id, .hljs-selector-class, .hljs-selector-attr, .hljs-selector-pseudo {
+    color: #d7ba7d
+  }
+
+  .hljs-addition {
+    background-color: #144212;
+    display: inline-block;
+    width: 100%
+  }
+
+  .hljs-deletion {
+    background-color: #600;
+    display: inline-block;
+    width: 100%
+  }
+
 </style>
