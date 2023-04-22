@@ -32,7 +32,8 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     druid:
       stat-view-servlet:
-        allow:
+        allow: ""
+        deny: ""
 
   elasticsearch:
     rest:

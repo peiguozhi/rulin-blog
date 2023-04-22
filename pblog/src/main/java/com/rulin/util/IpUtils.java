@@ -21,7 +21,7 @@ import static com.rulin.common.Constants.UNKNOWN;
 public class IpUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(IpUtils.class);
-    private final static String format_url = "https://apis.map.qq.com/ws/location/v1/ip?ip={}&key=XJIBZ-ZNUWU-ZHGVM-2Z3JG-VQKF2-HXFTB";
+    private final static String format_url = "https://apis.map.qq.com/ws/location/v1/ip?ip={}&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77";
 
     private final static String localIp = "127.0.0.1";
 

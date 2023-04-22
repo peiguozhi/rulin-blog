@@ -45,7 +45,7 @@ public class Constants {
 
     public static final String DEFAULT_VALUE = "defaultValue";
 
-    public static final Long OTHER_CATEGORY_ID = 16L;
+    public static final Long OTHER_CATEGORY_ID = 3L;
 
     public static final String ONE = "1";
 
