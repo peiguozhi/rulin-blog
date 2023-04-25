@@ -1133,7 +1133,15 @@ hr {
 
   /* 单行代码样式 */
   .markdown-body code{
-    background-color: #21252B;
+    background-color: #4483ea;
+  }
+  /* 主体代码颜色 */
+  .v-application code {
+    color: rgb(252, 252, 252);
+  }
+  /* 无序列表位置调整 */
+  .markdown-body ol, .markdown-body ul {
+    padding-left: 2em !important;
   }
 
   .hljs-ln {
