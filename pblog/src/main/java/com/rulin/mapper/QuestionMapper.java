@@ -51,4 +51,20 @@ public interface QuestionMapper extends BaseMapper<Question> {
      * @return {@link List}<{@link QuestionVO}>
      */
     List<QuestionVO> selectPreviewQuestion(Integer cid);
+
+    /**
+     * 收藏问题
+     *
+     * @param questionId 问题id
+     * @param isFavorite 是否收藏
+     */
+    void favoriteQuestion(Integer questionId, Integer isFavorite);
+
+
+    /**
+     * 查询收藏的问题
+     *
+     * @return {@link List}<{@link QuestionVO}>
+     */
+    List<QuestionVO> selectFavoriteQuestions();
 }

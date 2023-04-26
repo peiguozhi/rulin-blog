@@ -301,3 +301,23 @@ export function searchQuestion(keywords) {
     }
   });
 }
+
+// 是否收藏问题
+export function favoriteQuestion(questionId, isFavorite) {
+  return request({
+    url: "/web/question/favoriteQuestion",
+    method: "get",
+    params: {
+      questionId: questionId,
+      isFavorite: isFavorite
+    }
+  });
+}
+
+// 查询收藏问题列表
+export function getFavoriteQuestionList() {
+  return request({
+    url: "/web/question/listFavoriteQuestions",
+    method: "get"
+  });
+}

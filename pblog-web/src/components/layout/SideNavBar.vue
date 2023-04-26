@@ -54,13 +54,13 @@
         </router-link>
       </div>
       <div class="menus-item">
-        <router-link to="/albums">
-          <i class="iconfont iconxiangce1" /> 相册
+        <router-link to="/questions-app">
+          <i class="el-icon-hot-water" /> 面试题
         </router-link>
       </div>
       <div class="menus-item">
-        <router-link to="/questions-app">
-          <i class="el-icon-hot-water" /> 面试题
+        <router-link to="/favoriteQuestions-app">
+          <i class="el-icon-s-management" /> 收藏
         </router-link>
       </div>
       <div class="menus-item">

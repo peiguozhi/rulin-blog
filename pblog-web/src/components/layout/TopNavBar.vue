@@ -62,6 +62,11 @@
           </a>
           <ul class="menus-submenu">
             <li>
+              <router-link to="/favoriteQuestions">
+                <i class="el-icon-s-management" /> 收藏
+              </router-link>
+            </li>
+            <li>
               <router-link to="/albums">
                 <i class="iconfont iconxiangce1" /> 相册
               </router-link>

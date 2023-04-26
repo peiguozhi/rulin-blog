@@ -108,6 +108,14 @@ const routes = [
     path: "/questions-app/:qCategoryId/:questionId",
     component: resolve => require(["../views/question/Question-app.vue"], resolve)
   },
+  {
+    path: "/favoriteQuestions",
+    component: resolve => require(["../views/question/FavoriteQuestion.vue"], resolve)
+  },
+  {
+    path: "/favoriteQuestions-app",
+    component: resolve => require(["../views/question/FavoriteQuestion-app.vue"], resolve)
+  },
   // 访问意料之外的路由时重定向到/personal
   {
     path: "*",
