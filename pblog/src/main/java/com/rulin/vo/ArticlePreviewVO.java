@@ -18,8 +18,8 @@ public class ArticlePreviewVO {
     @ApiModelProperty(value = "封面图片")
     private String avatar;
 
-    @ApiModelProperty(value = "内容MD版")
-    private String contentMd;
+    @ApiModelProperty(value = "文章简介")
+    private String summary;
 
     @ApiModelProperty(value = "是否置顶")
     private int isStick;
