@@ -20,4 +20,19 @@
         from b_category c left join b_article b on c.id=b.category_id group by c.id order by c.sort desc
     </select>
 
+    <select id="selectBookList" resultType="com.rulin.vo.CategoryBookVO">
+        select c.id,c.name,count(b.id) as articleNum, o.icon, o.is_book
+        from b_category c
+            left join b_article b on c.id=b.category_id
+            left join b_category_book o ON c.id = o.category_id
+        WHERE
+            o.is_book = 1
+        group by c.id order by c.sort desc
+    </select>
+
+    <select id="isBookCaregory" resultType="java.lang.Integer">
+        select count(b.category_id) from b_category_book b where b.category_id = #{categoryId}
+    </select>
+
+
 </mapper>
