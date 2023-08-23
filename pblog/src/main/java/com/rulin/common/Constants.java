@@ -23,7 +23,7 @@ public class Constants {
     public static final String CITY = "市";
 
 
-    public static final String PRE_TAG = "<span style=\"color:red\">";
+    public static final String PRE_TAG = "<span class=\"keyword\">";
 
     public static final String POST_TAG = "</span>";
 
