@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Loading></Loading>
+
     <!-- banner -->
     <div class="banner" :style="cover">
       <div class="bgShade">
@@ -83,8 +85,12 @@
 
 <script>
   import { fetchFriend, addLink } from "../../api";
+  import Loading from "@/components/loading/loading";
 
   export default {
+    components: {
+      Loading
+    },
     metaInfo: {
       meta: [{
         name: "keyWords",
