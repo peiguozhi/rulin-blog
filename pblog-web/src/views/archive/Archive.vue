@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading></Loading>
     <!-- banner -->
     <div class="banner" :style="cover">
       <div class="bgShade">
@@ -36,6 +37,8 @@
 <script>
 import { Timeline, TimelineItem, TimelineTitle } from "vue-cute-timeline";
 import {getArchive} from '../../api'
+import Loading from "@/components/loading/loading";
+
 export default {
   metaInfo:{
     meta: [{
@@ -52,6 +55,7 @@ export default {
   components: {
     Timeline,
     TimelineItem,
+    Loading,
     TimelineTitle
   },
   data: function() {
