@@ -30,7 +30,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 3000
-    password:
+    password: root
 
 #==============================IP限流次数和时间配置==============================
 IpLimit:
