@@ -45,6 +45,11 @@ public class ApiTagsController {
         return categoryService.webList();
     }
 
-
+    @BusinessLogger(value = "笔记分类模块-用户访问页面", type = "查询", desc = "用户访问页面")
+    @RequestMapping(value = "/categoryBookList", method = RequestMethod.GET)
+    @ApiOperation(value = "笔记分类列表", httpMethod = "GET", response = ResponseResult.class, notes = "笔记分类列表")
+    public ResponseResult categoryBookList() {
+        return categoryService.categoryBookList();
+    }
 }
 
