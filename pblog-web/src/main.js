@@ -15,16 +15,19 @@ import { vueBaberrage } from "vue-baberrage";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import InfiniteLoading from "vue-infinite-loading";
-import "highlight.js/styles/atom-one-dark.css";
+import "highlight.js/styles/monokai-sublime.css";
 import VueImageSwipe from "vue-image-swipe";
 import "vue-image-swipe/dist/vue-image-swipe.css";
 import Toast from "./components/toast/index";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import MetaInfo from 'vue-meta-info'
-Vue.use(MetaInfo)
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import MetaInfo from "vue-meta-info";
+import "./assets/font/font.css";
+import "@/assets/css/mac.scss";
+import Loading from '@/components/loading/loading';
+Vue.use(MetaInfo);
 Vue.prototype.config = config;
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
@@ -35,6 +38,10 @@ Vue.use(InfiniteLoading);
 Vue.use(VueAxios, axios);
 Vue.use(VueImageSwipe);
 Vue.use(Toast);
+// 注册全局组件
+Vue.component('loading', Loading);
+// 创建一个 Vue 实例作为事件总线
+Vue.prototype.$bus = new Vue();
 
 Vue.filter("date", function(value) {
   return dayjs(value).format("YYYY-MM-DD");
@@ -58,7 +65,7 @@ Vue.filter("num", function(value) {
 router.beforeEach((to, from, next) => {
   if (to.path) {
     if (window._hmt) {
-      window._hmt.push(['_trackPageview',to.fullPath]);
+      window._hmt.push(["_trackPageview", to.fullPath]);
     }
   }
   NProgress.start();
@@ -89,7 +96,7 @@ axios.interceptors.response.use(
   }
 );
 
-new Vue({
+window.vm = new Vue({
   router,
   store,
   vuetify,
