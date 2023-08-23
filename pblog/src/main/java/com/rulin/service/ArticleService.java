@@ -103,7 +103,7 @@ public interface ArticleService extends IService<BlogArticle> {
      * 首页分页获取文章
      * @return
      */
-    ResponseResult listWebArticle();
+    ResponseResult listWebArticle(Long categoryId, Long tagId, String orderByDescColumn);
 
     /**
      * 首页获取文章详情
