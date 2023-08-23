@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading></Loading>
     <!-- 标签或分类名 -->
     <div class="banner" :style="cover">
       <div class="bgShade">
@@ -70,8 +71,12 @@
 
 <script>
   import { queryIdToArticles } from "../../api";
+  import Loading from "@/components/loading/loading";
 
   export default {
+    components: {
+      Loading
+    },
     metaInfo: {
       meta: [{
         name: "keyWords",
