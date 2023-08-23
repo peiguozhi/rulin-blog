@@ -1,7 +1,7 @@
 <template>
   <!-- 搜索框 -->
   <v-dialog v-model="searchFlag" max-width="600">
-    <v-card class="search-wrapper" style="border-radius:4px">
+    <v-card class="search-wrapper" style="border-radius:8px">
       <div class="mb-3">
         <span :class="0 === select ? 'search-title-selected':'search-title'" :key="0" @click="tab(0)">文章搜索</span>
         <span :class="1 === select ? 'search-title-selected':'search-title'" :key="1" @click="tab(1)">面试题搜索</span>
@@ -104,7 +104,7 @@
       },
       goToQuestion(cid, qid) {
         this.$store.state.searchFlag = false;
-        if (document.body.offsetWidth > 959){
+        if (document.body.offsetWidth > 959) {
           this.$router.push({ path: "/questions/" + cid + "/" + qid });
         } else {
           this.$router.push({ path: "/questions-app/" + cid + "/" + qid });
@@ -176,6 +176,7 @@
     .search-input-wrapper {
         display: flex;
         padding: 5px;
+        margin-bottom: 3px;
         height: 35px;
         width: 100%;
         border: 2px solid #8e8cd8;
@@ -204,7 +205,8 @@
     }
 
     .search-reslut a {
-        color: #555;
+        color: rgba(0, 0, 0, 0.77) !important;
+        font-size: 20px;
         font-weight: bold;
         border-bottom: 1px solid #999;
         text-decoration: none;
@@ -212,8 +214,8 @@
 
     .search-reslut-content {
         color: #555;
-        cursor: pointer;
-        border-bottom: 1px dashed #ccc;
+        cursor: text;
+        border-bottom: 2px dashed #d2ebfd;
         padding: 5px 0;
         line-height: 2;
         overflow: hidden;
@@ -227,4 +229,20 @@
         margin: 20px 0;
         border: 2px dashed #d2ebfd;
     }
+</style>
+
+<style lang="scss">
+  // 关键字颜色
+  .keyword {
+    color: red;
+  }
+
+  // 链接鼠标浮动颜色
+  .search-reslut a:hover {
+    color: #49b1f5 !important;
+    .keyword {
+      color: #49b1f5 !important;
+    }
+  }
+
 </style>
