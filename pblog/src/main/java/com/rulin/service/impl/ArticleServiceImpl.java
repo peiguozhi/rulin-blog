@@ -1,6 +1,7 @@
 package com.rulin.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -48,6 +49,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.rulin.common.Constants.*;
 import static com.rulin.common.RedisConstants.*;
@@ -84,6 +86,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
     private final HttpServletRequest request;
 
     private final ElasticsearchUtil elasticsearchUtil;
+
+    private final ArticleMapper articleMapper;
 
     @Value("${baidu.url}")
     private String baiduUrl;
@@ -314,8 +318,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
      * @return
      */
     @Override
-    public ResponseResult listWebArticle() {
-        Page<ArticlePreviewVO> articlePreviewDTOPage = baseMapper.selectPreviewPage(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()), PUBLISH.code, null, null);
+    public ResponseResult listWebArticle(Long categoryId,Long tagId,String orderByDescColumn) {
+        Page<ArticlePreviewVO> articlePreviewDTOPage = baseMapper.selectPreviewPage(new Page<>(PageUtils.getPageNo(), PageUtils.getPageSize()), PUBLISH.code, categoryId, tagId, orderByDescColumn);
         articlePreviewDTOPage.getRecords().forEach(item -> item.setTagVOList(tagsMapper.findByArticleIdToTags(item.getId())));
         return ResponseResult.success(articlePreviewDTOPage);
     }
@@ -332,8 +336,23 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
         List<TagVO> tags = tagsMapper.findByArticleIdToTags(blogArticle.getId());
         blogArticle.setTagList(tags);
         //分类
-        Category category = categoryMapper.selectOne(new LambdaQueryWrapper<Category>().select(Category::getId, Category::getName)
+        Category category = categoryMapper.selectOne(new LambdaQueryWrapper<Category>()
+                .select(Category::getId, Category::getName)
                 .eq(Category::getId, blogArticle.getCategoryId()));
+        Long categoryId = category.getId();
+        // 查看是否为笔记类系列文章
+        if (categoryMapper.isBookCaregory(categoryId) > 0) {
+            blogArticle.setArticleBookList(
+                    articleMapper
+                            .selectPreviewPage(new Page<>(1, 1000), PUBLISH.code, category.getId(),
+                                    null, "id").getRecords()
+                            .stream().map(item -> BeanUtil.copyProperties(item, ArticleBookVO.class))
+                            .collect(Collectors.toList())
+                    );
+        } else {
+            categoryId = null;
+        }
+
         blogArticle.setCategory(category);
         //评论
         QueryWrapper<Comment> queryWrapper = new QueryWrapper<Comment>()
@@ -346,9 +365,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
         blogArticle.setNewestArticleList(blogArticles);
 
         // 查询上一篇下一篇文章
-        LatestArticleVO lastArticle = baseMapper.getNextOrLastArticle(id, 0, PUBLISH.code);
+        LatestArticleVO lastArticle = baseMapper.getNextOrLastArticle(id, 0, PUBLISH.code, categoryId);
         blogArticle.setLastArticle(lastArticle);
-        LatestArticleVO nextArticle = baseMapper.getNextOrLastArticle(id, 1, PUBLISH.code);
+        LatestArticleVO nextArticle = baseMapper.getNextOrLastArticle(id, 1, PUBLISH.code, categoryId);
         blogArticle.setNextArticle(nextArticle);
 
         //相关推荐
@@ -380,7 +399,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
     @Override
     public ResponseResult condition(Long categoryId, Long tagId, Integer pageSize) {
         Map<String, Object> result = new HashMap<>();
-        Page<ArticlePreviewVO> blogArticlePage = baseMapper.selectPreviewPage(new Page<>(PageUtils.getPageNo(), pageSize), PUBLISH.getCode(), categoryId, tagId);
+        Page<ArticlePreviewVO> blogArticlePage = baseMapper.selectPreviewPage(new Page<>(PageUtils.getPageNo(), pageSize), PUBLISH.getCode(), categoryId, tagId, null);
         blogArticlePage.getRecords().forEach(item -> {
             List<TagVO> tagList = tagsMapper.findByArticleIdToTags(item.getId());
             item.setTagVOList(tagList);
