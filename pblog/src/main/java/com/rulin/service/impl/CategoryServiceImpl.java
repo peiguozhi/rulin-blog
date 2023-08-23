@@ -3,16 +3,17 @@ package com.rulin.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rulin.common.ResponseResult;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rulin.common.FieldConstants;
-import com.rulin.exception.BusinessException;
-import com.rulin.vo.CategoryVO;
+import com.rulin.common.ResponseResult;
 import com.rulin.entity.Category;
+import com.rulin.exception.BusinessException;
 import com.rulin.mapper.CategoryMapper;
 import com.rulin.service.CategoryService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rulin.util.DateUtils;
 import com.rulin.util.PageUtils;
+import com.rulin.vo.CategoryBookVO;
+import com.rulin.vo.CategoryVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,9 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.rulin.common.FieldConstants.LIMIT_ONE;
 import static com.rulin.common.ResultCode.CATEGORY_IS_EXIST;
 import static com.rulin.common.ResultCode.CATEGORY_IS_TOP;
-import static com.rulin.common.FieldConstants.LIMIT_ONE;
 
 /**
  * <p>
@@ -152,5 +153,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     public ResponseResult webList() {
         List<CategoryVO> categories = baseMapper.selectAll();
         return ResponseResult.success(categories);
+    }
+
+    /**
+     * 首页笔记分类列表
+     *
+     * @return
+     */
+    @Override
+    public ResponseResult categoryBookList() {
+        List<CategoryBookVO> categoryBooks = baseMapper.selectBookList();
+        return ResponseResult.success(categoryBooks);
     }
 }
