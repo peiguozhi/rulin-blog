@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading></Loading>
     <!-- banner -->
     <div class="home-banner" :style="cover">
       <div class="bgShade">
@@ -10,7 +11,8 @@
           </h1>
           <p></p>
           <!--     点击更换一言 图标  句子输出完成前，按钮不可点击   -->
-          <button class="el-icon-lollipop" :disabled="typerFlag" style="font-size: 2rem" @click="changeHitokoto"></button>
+          <button class="el-icon-lollipop" :disabled="typerFlag" style="font-size: 2rem"
+                  @click="changeHitokoto"></button>
           <p></p>
           <p></p>
           <!-- 一言 -->
@@ -52,90 +54,111 @@
         </div>
       </div>
     </div>
+
     <!-- 主页文章 -->
     <v-row class="home-container">
+      <v-col md="12" cols="12" style="padding: 0 7.5px !important;">
+        <!-- 笔记分类 -->
+        <div class="book">
+          <el-tabs v-model="activeName" @tab-click="handleTabClick">
+            <el-tab-pane class="categoryItem" v-for="(item, index) in categoryBookList" :name="index + ''" :key="index">
+                      <span slot="label">
+                          <i :class="item.icon"></i>
+                          {{ item.name }}
+                      </span>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+      </v-col>
       <v-col md="9" cols="12">
         <v-card>
-          <div style="display: flex;margin-top: 20px;padding: 1rem 1rem">
+          <div style="display: flex;margin-top: 0;padding: 1rem 1rem;" class="bulletin">
             <v-icon style="color: red">mdi-bell-outline</v-icon>
             <span style="margin-left: 10px">{{ blogInfo.webSite.bulletin }}</span>
           </div>
         </v-card>
-        <v-card
-          class="animated zoomIn article-card"
-          style="border-radius: 12px 8px 8px 12px"
-          v-for="(item, index) of articleList"
-          :key="item.id"
-        >
-          <!-- 文章封面图 -->
-          <div :class="isRight(index)">
-            <router-link :to="'/articles/' + item.id">
-              <v-img
-                class="on-hover"
-                width="100%"
-                height="100%"
-                :src="item.avatar"
-              />
-            </router-link>
-          </div>
-          <!-- 文章信息 -->
-          <div class="article-wrapper">
-            <div style="line-height:1.4">
-              <div>
-                <router-link :to="'/articles/' + item.id">
-                  {{ item.title }}
-                </router-link>
-                <span v-if="item.quantity >= 1000 && item.quantity < 10000"
-                      style="font-size:12px;border-radius:3px;border: 1px solid  #f70;text-align: center"><font
-                  style="color: #f70;">千次阅读</font></span>
-                <span v-if="item.quantity >= 10000"
-                      style="font-size:12px;border-radius:3px;border: 1px solid  #f70;text-align: center"><font
-                  style="color: #f70;">万次阅读</font></span>
-              </div>
+        <div v-if="articleList.length > 0">
+          <v-card
+            class="animated zoomIn article-card"
+            style="border-radius: 5px"
+            v-for="(item, index) of articleList"
+            :key="item.id"
+          >
+            <!-- 文章封面图 -->
+            <div class="article-cover right-radius">
+              <router-link :to="'/articles/' + item.id">
+                <v-img
+                  class="on-hover"
+                  width="100%"
+                  height="100%"
+                  :src="item.avatar"
+                />
+              </router-link>
             </div>
-            <div class="article-info">
-              <!-- 是否置顶 -->
-              <span v-if="item.isStick === 1">
+            <!-- 文章信息 -->
+            <div class="article-wrapper">
+              <div style="line-height:1.4">
+                <div>
+                  <router-link :to="'/articles/' + item.id">
+                    {{ item.title }}
+                  </router-link>
+                  <span v-if="item.quantity >= 1000 && item.quantity < 10000"
+                        style="font-size:12px;border-radius:3px;border: 1px solid  #f70;text-align: center"><font
+                    style="color: #f70;">千次阅读</font></span>
+                  <span v-if="item.quantity >= 10000"
+                        style="font-size:12px;border-radius:3px;border: 1px solid  #f70;text-align: center"><font
+                    style="color: #f70;">万次阅读</font></span>
+                </div>
+              </div>
+              <div class="article-info">
+                <!-- 是否置顶 -->
+                <span v-if="item.isStick === 1">
                 <span style="color:#ff7242">
                   <i class="iconfont iconzhiding" /> 置顶
                 </span>
                 <span class="separator">|</span>
               </span>
-              <!-- 发表时间 -->
-              <v-icon size="14">mdi-calendar-month-outline</v-icon>
-              {{ item.createTime | date }}
-              <span class="separator">|</span>
-              <!-- 文章分类 -->
-              <router-link :to="'/categories/' + item.categoryId">
-                <v-icon size="14">mdi-inbox-full</v-icon>
-                {{ item.categoryName }}
-              </router-link>
-              <span class="separator">|</span>
-              <!-- 文章标签 -->
-              <router-link
-                style="display:inline-block"
-                :to="'/tags/' + tag.id"
-                class="mr-1"
-                v-for="tag of item.tagDTOList"
-                :key="tag.id"
-              >
-                <v-icon size="14">mdi-tag-multiple</v-icon>
-                {{ tag.name }}
-              </router-link>
+                <!-- 发表时间 -->
+                <v-icon size="14">mdi-calendar-month-outline</v-icon>
+                {{ item.createTime | date }}
+                <span class="separator">|</span>
+                <!-- 文章分类 -->
+                <router-link :to="'/categories/' + item.categoryId">
+                  <v-icon size="14">mdi-inbox-full</v-icon>
+                  {{ item.categoryName }}
+                </router-link>
+                <span class="separator">|</span>
+                <!-- 文章标签 -->
+                <router-link
+                  style="display:inline-block"
+                  :to="'/tags/' + tag.id"
+                  class="mr-1"
+                  v-for="tag of item.tagDTOList"
+                  :key="tag.id"
+                >
+                  <v-icon size="14">mdi-tag-multiple</v-icon>
+                  {{ tag.name }}
+                </router-link>
+              </div>
+              <!-- 文章内容 -->
+              <div class="article-content">
+                {{ item.summary }}
+              </div>
             </div>
-            <!-- 文章内容 -->
-            <div class="article-content">
-              {{ item.content }}
-            </div>
+          </v-card>
+          <!-- 无限加载 -->
+          <!--          <infinite-loading @infinite="infiniteHandler">-->
+          <!--            <div slot="no-more" />-->
+          <!--          </infinite-loading>-->
+          <!-- 加载更改文章按钮 -->
+          <div @click="onPage" class="page">
+            <Pagination :pageNo="params.pageNo" :pages="pages" />
           </div>
-        </v-card>
-        <!-- 无限加载 -->
-        <infinite-loading @infinite="infiniteHandler">
-          <div slot="no-more" />
-        </infinite-loading>
+        </div>
+        <el-empty style=" width: 100%;" v-else description="很抱歉，暂无文章"></el-empty>
       </v-col>
       <!-- 博主信息 -->
-      <v-col md="3" cols="12" class="d-md-block d-none">
+      <v-col md="3" cols="q" class="d-md-block d-none">
         <div class="blog-wrapper">
           <v-card class="animated zoomIn blog-card mt-5">
             <div class="author-wrapper">
@@ -157,7 +180,7 @@
             <div class="blog-info-wrapper">
               <div class="blog-info-data">
                 <router-link to="/archives">
-                  <div style="font-size: 0.875rem">文章</div>
+                  <div style="font-size: 0.875rem;color: #1c1c1c">文章</div>
                   <div style="font-size: 1.25rem">
                     {{ blogInfo.count.articleCount }}
                   </div>
@@ -165,7 +188,7 @@
               </div>
               <div class="blog-info-data">
                 <router-link to="/categories">
-                  <div style="font-size: 0.875rem">分类</div>
+                  <div style="font-size: 0.875rem;color: #1c1c1c">分类</div>
                   <div style="font-size: 1.25rem">
                     {{ blogInfo.count.categoryCount }}
                   </div>
@@ -173,7 +196,7 @@
               </div>
               <div class="blog-info-data">
                 <router-link to="/tags">
-                  <div style="font-size: 0.875rem">标签</div>
+                  <div style="font-size: 0.875rem;color: #1c1c1c">标签</div>
                   <div style="font-size: 1.25rem"> {{ blogInfo.count.tagCount }}</div>
                 </router-link>
               </div>
@@ -234,16 +257,17 @@
               </ul>
             </div>
           </v-card>
-          <v-card class="blog-card animated zoomIn mt-5">
-            <div id="he-plugin-standard"></div>
-          </v-card>
+          <!--    和风天气      -->
+          <!--          <v-card class="blog-card animated zoomIn mt-5">
+                      <div id="he-plugin-standard"></div>
+                    </v-card>-->
           <!-- 网站信息 -->
           <v-card class="blog-card animated zoomIn mt-5">
             <div class="web-info-title">
               标签云
             </div>
             <div class="web-info">
-              <svg :width="width" :height="height" @mousemove="listener($event)">
+              <svg :height="height" :width="width" style="text-align: center;" @mousemove="listener($event)">
                 <router-link
                   v-for="(tag,index) in tags"
                   :key="tag.text.id"
@@ -288,13 +312,22 @@
 
 <script>
   import EasyTyper from "easy-typer-js";
-  import { fetchList, addFeedback, getTags } from "../../api";
+  import { fetchList, addFeedback, getTags, featchCategoryBook } from "../../api";
+  import Pagination from "@/components/pagination/index.vue";
+  import Loading from "@/components/loading/loading";
 
   export default {
+    components: {
+      Pagination,
+      Loading
+    },
     created() {
       this.init();
       this.timer = setInterval(this.runTime, 1000);
       this.changeColors();
+      // 初始化文章列表
+      this.onPage();
+      this.fetchcategoryBookList();
       //初始化标签位置
       let tags = [];
       getTags().then(res => {
@@ -351,9 +384,9 @@
     },
     data: function() {
       return {
-        width: 220,//svg宽度
+        width: 260,//svg宽度
         height: 230,//svg高度
-        RADIUS: 100,//球的半径
+        RADIUS: 80,//球的半径
         speedX: Math.PI / 360,//球一帧绕x轴旋转的角度
         speedY: Math.PI / 360,//球-帧绕y轴旋转的角度
         tags: [],
@@ -388,9 +421,19 @@
         },
         articleList: [],
         params: {
-          pageNo: 1,
+          pageNo: 0,
           pageSize: 7
         },
+        pages: 0,
+        activeName: "0",
+        categoryBookList: [
+          {
+            id: null,
+            name: "最新",
+            icon: "el-icon-news",
+            desc: "create_time"
+          }
+        ],
         rules: {
           type: [
             { required: true, message: "必填字段", trigger: "blur" }
@@ -482,6 +525,7 @@
           this.socket.onmessage = this.getMessage;
         }
         this.changeHitokoto();
+
       },
       // 一言Api进行打字机循环输出效果  by  程序儒  2023年4月11日
       initTyped(input, fn, hooks) {
@@ -489,13 +533,13 @@
         const typed = new EasyTyper(obj, input, () => {
           // 回调函数  文字输出完成，将更换按钮设置为可用状态
           this.typerFlag = false;
-        }, (output)=>{
+        }, (output) => {
           // 钩子函数 output { 当前帧的输出内容 }
           // 文字正在输出，将更换按钮设置为不可点击状态
           this.typerFlag = true;
         });
       },
-      changeHitokoto(){
+      changeHitokoto() {
         // 加载一言名句 a 动画，b 漫画，c 游戏，d 文学，e 原创，f 来自网络，g 其他，h 影视，i 诗词，j 网易云，k 哲学，l 抖机灵
         fetch("https://v1.hitokoto.cn?c=i&c=j&c=k&c=d&c=l")
           .then(res => {
@@ -529,27 +573,37 @@
         str += day.getSeconds() + "秒";
         this.time = str;
       },
-      infiniteHandler($state) {
-        let md = require("markdown-it")();
+      onPage() {
+        // let md = require("markdown-it")();
+        this.params.pageNo++;
         fetchList(this.params).then(res => {
-          if (res.data.records.length) {
-            // 去除markdown标签
-            res.data.records.forEach(item => {
-              if (item.contentMd != null) {
-                item.content = md
-                  .render(item.contentMd)
-                  .replace(/<\/?[^>]*>/g, "")
-                  .replace(/[|]*\n/, "")
-                  .replace(/&npsp;/gi, "");
-              }
-              this.articleList.push(item);
-            });
-            this.params.pageNo++;
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
+          // 去除markdown标签
+          // res.data.records.forEach(item => {
+          //   if (item.contentMd != null) {
+          //     item.content = md
+          //       .render(item.contentMd)
+          //       .replace(/<\/?[^>]*>/g, "")
+          //       .replace(/[|]*\n/, "")
+          //       .replace(/&npsp;/gi, "");
+          //   }
+          //   this.articleList.push(item);
+          // });
+          this.articleList.push(...res.data.records);
+          this.pages = res.data.pages;
         });
+      },
+      fetchcategoryBookList() {
+        featchCategoryBook().then(res => {
+          this.categoryBookList.push(...res.data);
+        });
+      },
+      handleTabClick(tab) {
+        this.articleList = [];
+        let item = this.categoryBookList[tab.index];
+        this.params.pageNo = 0;
+        this.params.categoryId = item.id;
+        this.params.orderByDescColumn = item.desc;
+        this.onPage();
       },
       open: function() {
         // 发送心跳消息
@@ -578,14 +632,14 @@
       CY() {
         return this.height / 2;
       },
-      isRight() {
-        return function(index) {
-          if (index % 2 === 0) {
-            return "article-cover left-radius";
-          }
-          return "article-cover right-radius";
-        };
-      },
+      /*      isRight() {
+              return function(index) {
+                if (index % 2 === 0) {
+                  return "article-cover left-radius";
+                }
+                return "article-cover right-radius";
+              };
+            },*/
       blogInfo() {
         return this.$store.state.blogInfo;
       },
@@ -607,6 +661,22 @@
   };
 </script>
 
+<style lang="scss" scoped>
+  ::v-deep .el-tabs__item {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  ::v-deep .el-tabs {
+    width: 100%;
+  }
+  ::v-deep .el-tabs__nav-scroll {
+    display: flex;
+    justify-content: center;
+  }
+
+
+</style>
+
 <style lang="stylus">
   .typed-cursor
     opacity: 1
@@ -622,10 +692,15 @@
 </style>
 
 <style scoped>
+    .page {
+        margin-top: 2rem;
+    }
+
     /*  调整首图背景不透明度  by 程序儒  2023年4月11日  */
     .bgShade {
         background-color: rgba(0, 0, 0, 0.15);
     }
+
     .home-banner {
         position: absolute;
         top: -60px;
@@ -637,6 +712,7 @@
         color: #fff !important;
         animation: header-effect 1s;
     }
+
     .banner-container {
         margin-top: 43vh;
         line-height: 1.5;
@@ -663,7 +739,7 @@
     }
 
     .right-radius {
-        border-radius: 0 8px 8px 0 !important;
+        border-radius: 5px 5px 5px 5px !important;
         order: 1;
     }
 
@@ -676,6 +752,7 @@
             font-size: 3rem;
             font-family: 'STXingkai', serif !important;
             margin-bottom: 1rem;
+            color: #eee;
         }
 
         .blog-intro {
@@ -689,7 +766,7 @@
         }
 
         .home-container {
-            max-width: 1200px;
+            max-width: 65%;
             margin: calc(100vh - 48px) auto 28px auto;
             padding: 0 5px;
         }
@@ -697,15 +774,18 @@
         .article-card {
             display: flex;
             align-items: center;
-            height: 280px;
+            height: 200px;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .article-cover {
+            position: absolute;
+            top: 22px;
+            right: 15px;
             overflow: hidden;
-            height: 100%;
-            width: 45%;
+            height: 75%;
+            width: 25%;
         }
 
         .on-hover {
@@ -717,8 +797,8 @@
         }
 
         .article-wrapper {
-            padding: 0 2.5rem;
-            width: 55%;
+            padding: 0 2rem;
+            width: 70%;
         }
 
         .article-wrapper a {
@@ -738,6 +818,7 @@
             font-size: 3rem;
             font-family: 'STXingkai', serif !important;
             margin-bottom: 1rem;
+            color: #eee;
         }
 
         .blog-intro {
@@ -793,7 +874,7 @@
     }
 
     .article-wrapper a:hover {
-        color: #8e8cd8;
+        color: rgba(73, 177, 245, 0.8);
     }
 
     .article-info {
@@ -815,6 +896,7 @@
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+        cursor: text;
     }
 
     .blog-wrapper {
@@ -823,8 +905,10 @@
     }
 
     .blog-card {
+        margin-bottom: 15px;
+        margin-top: 0 !important;
         line-height: 2;
-        padding: 1.25rem 1.5rem;
+        padding: 1.25rem 0.6rem;
     }
 
     .author-wrapper {
