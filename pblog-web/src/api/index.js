@@ -140,6 +140,15 @@ export function getCategory() {
   });
 }
 
+// 系列笔记分类接口
+export function featchCategoryBook() {
+  return request({
+    url: "/web/tags/categoryBookList",
+    method: "get",
+    params: {}
+  });
+}
+
 //归档接口
 export function getArchive(params) {
   return request({
