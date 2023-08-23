@@ -68,7 +68,7 @@ public interface ArticleMapper extends BaseMapper<BlogArticle> {
      * @param code 发布状态
      * @return
      */
-    LatestArticleVO getNextOrLastArticle(@Param("id") Integer id, @Param("type") Integer type, @Param("publish")int code);
+    LatestArticleVO getNextOrLastArticle(@Param("id") Integer id, @Param("type") Integer type, @Param("publish")int code, @Param("categoryId")Long categoryId);
 
     /**
      * 首页获取最新文章
@@ -94,7 +94,8 @@ public interface ArticleMapper extends BaseMapper<BlogArticle> {
      * @return
      */
     Page<ArticlePreviewVO> selectPreviewPage(@Param("page") Page<Object> page, @Param("publish")int publish,
-                                             @Param("categoryId") Long categoryId, @Param("tagId") Long tagId);
+                                             @Param("categoryId") Long categoryId, @Param("tagId") Long tagId,
+                                             @Param("orderByDescColumn") String orderByDescColumn);
 
     /**
      * 首页分页获取归档
