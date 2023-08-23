@@ -1,6 +1,7 @@
 package com.rulin.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rulin.vo.CategoryBookVO;
 import com.rulin.vo.CategoryCountVO;
 import com.rulin.vo.CategoryVO;
 import com.rulin.entity.Category;
@@ -44,4 +45,19 @@ public interface CategoryMapper extends BaseMapper<Category> {
      */
     List<CategoryVO> selectAll();
 
+    /**
+     * 首页获取所有笔记分类
+     *
+     * @return {@code List<CategoryBookVO>}
+     */
+    List<CategoryBookVO> selectBookList();
+
+
+    /**
+     * 查询是否为笔记分类
+     *
+     * @param categoryId 类别id
+     * @return int
+     */
+    int isBookCaregory(@Param("categoryId") Long categoryId);
 }
