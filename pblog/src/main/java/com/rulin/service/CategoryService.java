@@ -73,4 +73,11 @@ public interface CategoryService extends IService<Category> {
      */
     ResponseResult webList();
 
+
+    /**
+     * 笔记分类列表
+     *
+     * @return {@code ResponseResult}
+     */
+    ResponseResult categoryBookList();
 }
