@@ -1,5 +1,5 @@
 export default {
-  "[微笑]": "https://static.talkxj.com/emoji/smile.jpg",
+  "[微笑]": "https://www.emojiall.com/en/header-svg/%E2%98%BA%EF%B8%8E.svg",
 
   "[笑]": " https://static.talkxj.com/emoji/dx.jpg",
 
