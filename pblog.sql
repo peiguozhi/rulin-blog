@@ -108,6 +108,11 @@ CREATE TABLE `b_category`  (
   INDEX `category_name`(`name`) USING BTREE COMMENT '博客分类名称'
 ) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '博客分类表' ROW_FORMAT = DYNAMIC;
 
+
+
+
+
+
 -- ----------------------------
 -- Records of b_category
 -- ----------------------------
@@ -120,6 +125,29 @@ INSERT INTO `b_category` VALUES (6, '爬虫', 0, 1, '2023-04-20 17:08:57', '2023
 INSERT INTO `b_category` VALUES (7, '小工具', 0, 7, '2023-04-20 15:05:58', '2023-04-20 17:46:18');
 INSERT INTO `b_category` VALUES (8, '数据库', 0, 0, '2023-04-20 16:01:07', '2023-04-20 08:01:06');
 INSERT INTO `b_category` VALUES (9, '测试', 0, 0, '2023-04-20 18:35:30', '2023-04-20 18:35:30');
+
+
+-- ----------------------------
+-- Table structure for b_category_book
+-- ----------------------------
+DROP TABLE IF EXISTS `b_category_book`;
+CREATE TABLE `b_category_book`  (
+  `category_id` bigint(20) NOT NULL COMMENT '分类id',
+  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分类图标',
+  `is_book` int(3) NULL DEFAULT NULL COMMENT '是否为系列笔记',
+  PRIMARY KEY (`category_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of b_category_book
+-- ----------------------------
+INSERT INTO `b_category_book` VALUES (12, 'el-icon-coffee-cup', 1);
+INSERT INTO `b_category_book` VALUES (13, 'el-icon-coffee-cup', 1);
+
+
+
+
+
 
 -- ----------------------------
 -- Table structure for b_comment
