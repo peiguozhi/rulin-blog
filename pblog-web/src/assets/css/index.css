@@ -1,15 +1,18 @@
 
 body {
-  cursor: url(https://fastly.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/default.cur),default;
+  cursor: url(https://fastly.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/img/default.cur), default;
 }
-a, button, img {
-  cursor: url(https://fastly.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/pointer.cur),default;
+a:hover, button:hover, img:hover, .onPage:hover, .bulletin:hover {
+  cursor: url(https://fastly.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/img/pointer.cur), pointer;
+}
+code:hover {
+  cursor: text;
 }
 ul{
   padding:0 !important;
 }
 * {
-  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Lato,Roboto,'PingFang SC','Microsoft YaHei',sans-serif !important;
+  font-family: 'pgz', -apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Lato,Roboto,'PingFang SC','Microsoft YaHei',sans-serif ;
 }
 .v-navigation-drawer{
   z-index: 20;
@@ -32,7 +35,7 @@ ul{
 .theme--light.v-card {
   background: #fff;
   color: #4c4948;
-  border-radius: 8px;
+  border-radius: 5px;
   box-shadow: 0 4px 8px 6px rgba(7, 17, 27, 0.06);
   transition: all 0.3s;
 }
@@ -45,7 +48,7 @@ ul{
 }
 
 .v-card:not(.v-sheet--tile):not(.v-card--shaped) {
-  border-radius: 8px;
+  border-radius: 5px;
 }
 
 .theme--light.v-card:hover {
@@ -74,8 +77,12 @@ ul{
 }
 
 .theme--light.v-application a{
-  color: #4c4948;
+  /*color: #4c4948;*/
   text-decoration: none;
+}
+
+.theme--light.v-application a:hover{
+  color: #ff7242 !important;
 }
 
 .theme--light.v-divider {
@@ -173,7 +180,7 @@ p {
   }
   .article-container{
     animation: main 1s;
-    max-width: 1200px;
+    max-width: 100%;
     margin: 372.5px auto 40px auto !important;
     padding: 0 5px;
   }
@@ -419,10 +426,17 @@ pre.hljs code {
   padding-left: 6px;
   color: #666261 !important;
   transition: all .2s ease-in-out;
+  border-radius: 3px;
 }
+
+li a:hover {
+  color: #ff7242;
+  /*color: rgba(73, 177, 245, 0.8) !important;*/
+}
+
 .is-active-link{
-  border-left-color: #009d92;
-  background: #00c4b6;
+  /*border-left-color: #009d92;*/
+  background: rgba(73, 177, 245, 0.88);
   color: #fff !important;
 }
 
@@ -492,4 +506,25 @@ pre.hljs code {
   right: 0;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* 修改标题颜色  2023年8月19日 */
+h1, h2, h3, h4, h5, h6 {
+  /*color: #1f2d3d;*/
+  color: #1976d2;
+  /*color: rgba(73, 177, 245, 0.8);*/
+  /*margin: 20px 0 14px;*/
+  /*font-weight: bold;*/
+}
+
+/* 修改标题颜色  2023年8月19日 */
+h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+  /*color: #49b1f5;*/
+  color: #ff7242;
+}
+
+
+p strong {
+  color: rgba(0, 0, 0, 0.77);
+  font-weight: bold;
 }
