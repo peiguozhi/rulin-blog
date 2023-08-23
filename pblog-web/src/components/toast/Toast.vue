@@ -23,7 +23,8 @@ export default {
           this.icon = "iconfont iconcuowu";
           break;
         case "success":
-          this.color = "#52C41A";
+          // this.color = "#52C41A";
+          this.color = "#49b1f5";
           this.icon = "iconfont iconchenggong";
           break;
         case "warnning":
