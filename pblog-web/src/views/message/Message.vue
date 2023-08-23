@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading></Loading>
     <!-- banner -->
     <div class="message-banner" :style="cover">
       <div class="bgShade">
@@ -46,8 +47,12 @@
 
 <script>
   import { listMessage, addMessage } from "../../api";
+  import Loading from "@/components/loading/loading";
 
   export default {
+    components: {
+      Loading
+    },
     metaInfo: {
       meta: [{
         name: "keyWords",
@@ -198,7 +203,7 @@
     }
 
     .barrage-items {
-        background: rgb(0, 0, 0, 0.7);
+        background: rgba(0, 0, 0, 0.7);
         border-radius: 100px;
         color: #fff;
         padding: 5px 10px 5px 5px;
