@@ -170,7 +170,7 @@ p {
     font-size: 2.5rem;
     text-align: center;
     color: #eee;
-    font-family: 'STXingkai', serif !important;
+    font-family: 'STXingkai', 'pgz', serif !important;
   }
   .blog-container {
     animation: main 1s;
@@ -230,7 +230,7 @@ p {
     text-align: center;
     color: #eee;
     animation: title-scale 1s;
-    font-family: 'STXingkai', serif !important;
+    font-family: 'STXingkai', 'pgz', serif !important;
   }
   .login-container {
     padding: 1rem;
