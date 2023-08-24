@@ -36,26 +36,9 @@
         <v-card class="article-wrapper">
           <!--题目信息-->
           <div style="overflow: hidden">
-            <span class="mid-side-title"><i class="num">{{ curIndex + 1 }}</i>
-              {{ questionList[curIndex].quContent }}</span>
+            <span class="mid-side-title"><i class="num">{{ curIndex + 1 }}</i>{{ questionList[curIndex].quContent
+              }}</span>
 
-            <span style="float: right;margin-right: 5px">
-              <el-button
-                         @click="isFavorite"
-                         v-if="!showFavorite"
-                         style="border: none;padding: 10px 5px;font-size: 1.5rem"
-                         class="animated swing"
-                         icon="el-icon-star-off" />
-
-              <el-button
-                         @click="isFavorite"
-                         v-if="showFavorite"
-                         style="border: none;padding: 10px 5px;font-size: 1.5rem"
-                         class="animated swing"
-                         type="warning"
-                         icon="el-icon-star-off" />
-
-          </span>
             <el-divider />
 
             <!-- 参考答案：  -->
@@ -99,7 +82,7 @@
 <script>
   import Clipboard from "clipboard";
   import EasyTyper from "easy-typer-js";
-  import { favoriteQuestion, getCategoryAndQuestionList } from "../../api";
+  import { getCategoryAndQuestionList } from "../../api";
 
   export default {
     created() {
@@ -120,7 +103,6 @@
     },
     data: function() {
       return {
-        showFavorite: false,
         analysisContent: "",
         // 从路由中获取问题id
         qCategoryId: this.$route.params.qCategoryId,
@@ -160,25 +142,6 @@
       };
     },
     methods: {
-      // 收藏方法
-      isFavorite() {
-        let fq = this.questionList[this.curIndex]
-        if (this.showFavorite) {
-          favoriteQuestion(fq.id, 0).then(res => {
-            fq.isFavorite = 0;
-            this.showFavorite = false;
-          }).catch(err => {
-            console.log(err)
-          })
-        } else if (!this.showFavorite) {
-          favoriteQuestion(this.questionList[this.curIndex].id, 1).then(res => {
-            fq.isFavorite = 1;
-            this.showFavorite = true;
-          }).catch(err => {
-            console.log(err)
-          })
-        }
-      },
       // 获取分类和题目信息
       getQuestionList(cid, qid) {
         if (typeof (cid) === "undefined" && typeof (qid) === "undefined") {
@@ -215,11 +178,6 @@
 
       getAnalysis(curIndex) {
         const that = this;
-        if (that.questionList[curIndex].isFavorite === 1){
-          that.showFavorite = true;
-        } else {
-          that.showFavorite = false;
-        }
         this.markdownToHtml(this.questionList[curIndex].analysisMd);
         this.$nextTick(() => {
           // 添加代码复制功能
@@ -377,7 +335,6 @@
     .side-container {
         padding-top: 10px;
         padding-left: 10px;
-        padding-bottom: 15px;
         font-size: 16px;
         max-height: 800px;
         overflow: auto;

@@ -49,34 +49,15 @@
         WHERE id = #{question.id}
     </update>
 
-    <update id="favoriteQuestion">
-        UPDATE b_question
-        SET is_favorite=#{isFavorite}
-        WHERE id = #{questionId}
-    </update>
-
     <select id="selectPreviewQuestion" resultType="com.rulin.vo.QuestionVO">
         SELECT
             id,
             qu_content,
-            analysis_md,
-            is_favorite
+            analysis_md
         FROM
             b_question
         WHERE
-            is_publish = 1 and q_category_id = #{cid}
-    </select>
-
-    <select id="selectFavoriteQuestions" resultType="com.rulin.vo.QuestionVO">
-        SELECT
-            id,
-            qu_content,
-            analysis_md,
-            is_favorite
-        FROM
-            b_question
-        WHERE
-            is_publish = 1 and is_favorite = 1
+            is_publish = 1 and q_category_id=#{cid}
     </select>
 
 </mapper>

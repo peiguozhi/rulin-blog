@@ -101,22 +101,4 @@ public interface QuestionService extends IService<Question> {
      * @return {@link ResponseResult}
      */
     ResponseResult searchQuestion(String keywords);
-
-
-    /**
-     * 收藏问题
-     *
-     * @param questionId 问题id
-     * @param isFavorite 是最喜欢
-     * @return {@link ResponseResult}
-     */
-    ResponseResult favoriteQuestion(Integer questionId, Integer isFavorite);
-
-    /**
-     * 查询收藏的问题列表
-     *
-     *
-     * @return {@link ResponseResult}
-     */
-    ResponseResult listFavoriteQuestions();
 }

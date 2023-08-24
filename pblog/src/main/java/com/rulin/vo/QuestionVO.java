@@ -27,7 +27,4 @@ public class QuestionVO {
     @ApiModelProperty(value = "面试题答案MD版")
     private String analysisMd;
 
-    @ApiModelProperty(value = "是否收藏")
-    private Integer isFavorite;
-
 }

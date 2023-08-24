@@ -38,18 +38,4 @@ public class ApiQuestionController {
         return questionService.searchQuestion(keywords);
     }
 
-
-    @BusinessLogger(value = "门户-面试题收藏操作", type = "修改", desc = "修改是否收藏该题目")
-    @GetMapping(value = "/favoriteQuestion")
-    @ApiOperation(value = "面试题收藏", httpMethod = "GET", response = ResponseResult.class, notes = "面试题收藏")
-    public ResponseResult favoriteQuestion(Integer questionId, Integer isFavorite) {
-        return questionService.favoriteQuestion(questionId, isFavorite);
-    }
-
-    @BusinessLogger(value = "门户-用户访问收藏的面试题", type = "查询", desc = "查询收藏的面试题分类信息和该分类下的问题列表")
-    @GetMapping(value = "/listFavoriteQuestions")
-    @ApiOperation(value = "收藏的面试题列表", httpMethod = "GET", response = ResponseResult.class, notes = "收藏的面试题列表")
-    public ResponseResult listFavoriteQuestions() {
-        return questionService.listFavoriteQuestions();
-    }
 }

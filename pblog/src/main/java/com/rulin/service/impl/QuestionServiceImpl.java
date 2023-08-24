@@ -280,27 +280,4 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         return ResponseResult.success(questionSearchVOS);
     }
 
-    /**
-     * 收藏问题
-     *
-     * @param questionId 问题id
-     * @param isFavorite 是否喜欢
-     * @return {@link ResponseResult}
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseResult favoriteQuestion(Integer questionId, Integer isFavorite) {
-        baseMapper.favoriteQuestion(questionId, isFavorite);
-        return ResponseResult.success();
-    }
-
-    /**
-     * 查询收藏的问题列表
-     *
-     * @return {@link ResponseResult}
-     */
-    @Override
-    public ResponseResult listFavoriteQuestions() {
-        return ResponseResult.success(baseMapper.selectFavoriteQuestions());
-    }
 }

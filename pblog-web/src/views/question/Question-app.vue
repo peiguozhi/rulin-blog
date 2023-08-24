@@ -15,29 +15,11 @@
     <v-card class="left-side-title">
       <span class="mid-title">题目分类：</span>
       <el-select v-model="cIndex"
-                 style="width: 60%"
                  @change="getQuestionList" placeholder="请选择分类"
       >
         <el-option v-for="item in categoryList" :key="item.id" :label="item.name + ' (' + item.questionNum + ')'"
                    :value="item.id" />
       </el-select>
-      <span style="float: right;">
-              <el-button
-                @click="isFavorite"
-                v-if="!showFavorite"
-                style="border: none;padding: 8px 4px;font-size: 1.5rem"
-                class="animated swing"
-                icon="el-icon-star-off" />
-
-              <el-button
-                @click="isFavorite"
-                v-if="showFavorite"
-                style="border: none;padding: 8px 4px;font-size: 1.5rem"
-                class="animated swing"
-                type="warning"
-                icon="el-icon-star-off" />
-
-          </span>
     </v-card>
 
     <!-- 中间内容 -->
@@ -96,7 +78,7 @@
 <script>
   import Clipboard from "clipboard";
   import EasyTyper from "easy-typer-js";
-  import { favoriteQuestion, getCategoryAndQuestionList } from "../../api";
+  import { getCategoryAndQuestionList } from "../../api";
 
   export default {
     created() {
@@ -117,7 +99,6 @@
     },
     data: function() {
       return {
-        showFavorite: false,
         analysisContent: "",
         // 从路由中获取问题id
         qCategoryId: this.$route.params.qCategoryId,
@@ -161,25 +142,6 @@
       };
     },
     methods: {
-      // 收藏方法
-      isFavorite() {
-        let fq = this.questionList[this.curIndex]
-        if (this.showFavorite) {
-          favoriteQuestion(fq.id, 0).then(res => {
-            fq.isFavorite = 0;
-            this.showFavorite = false;
-          }).catch(err => {
-            console.log(err)
-          })
-        } else if (!this.showFavorite) {
-          favoriteQuestion(this.questionList[this.curIndex].id, 1).then(res => {
-            fq.isFavorite = 1;
-            this.showFavorite = true;
-          }).catch(err => {
-            console.log(err)
-          })
-        }
-      },
       // 获取分类和题目信息
       getQuestionList(cid, qid) {
 
@@ -217,11 +179,6 @@
 
       getAnalysis(curIndex) {
         const that = this;
-        if (that.questionList[curIndex].isFavorite === 1){
-          that.showFavorite = true;
-        } else {
-          that.showFavorite = false;
-        }
         this.markdownToHtml(this.questionList[curIndex].analysisMd);
         this.$nextTick(() => {
           // 添加代码复制功能
