@@ -37,7 +37,7 @@
           <!--题目信息-->
           <div style="overflow: hidden">
             <span class="mid-side-title"><i class="num">{{ curIndex + 1 }}</i>{{ questionList[curIndex].quContent
-              }}</span>
+              }}:</span>
 
             <el-divider />
 
@@ -177,7 +177,6 @@
       },
 
       getAnalysis(curIndex) {
-        const that = this;
         this.markdownToHtml(this.questionList[curIndex].analysisMd);
         this.$nextTick(() => {
           // 添加代码复制功能
@@ -538,11 +537,6 @@
   /* 单行代码样式 */
   .markdown-body code{
     background-color: #21252B;
-  }
-
-  /* 无序列表位置调整 */
-  .markdown-body ol, .markdown-body ul {
-    padding-left: 2em !important;
   }
 
   .hljs-ln {
