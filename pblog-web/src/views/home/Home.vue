@@ -750,14 +750,14 @@
     @media (min-width: 760px) {
         .blog-title {
             font-size: 3rem;
-            font-family: 'STXingkai', serif !important;
+            font-family: 'STXingkai', 'pgz', serif !important;
             margin-bottom: 1rem;
             color: #eee;
         }
 
         .blog-intro {
             font-size: 1.5rem;
-            font-family: 'STXingkai', serif !important;
+            font-family: 'STXingkai', 'pgz', serif !important;
             margin: 1rem auto;
         }
 
@@ -816,14 +816,14 @@
 
         .blog-title {
             font-size: 3rem;
-            font-family: 'STXingkai', serif !important;
+            font-family: 'STXingkai', 'pgz', serif !important;
             margin-bottom: 1rem;
             color: #eee;
         }
 
         .blog-intro {
             font-size: 1.5rem;
-            font-family: 'STXingkai', serif !important;
+            font-family: 'STXingkai', 'pgz', serif !important;
             max-width: 80%;
             margin: 1rem auto;
         }
