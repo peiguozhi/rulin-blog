@@ -148,7 +148,7 @@
     .message-title {
         color: #eee;
         animation: title-scale 1s;
-        font-family: 'STXingkai', serif !important;
+        font-family: 'STXingkai', 'pgz', serif !important;
     }
 
     .message-container {
