@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading></Loading>
+<!--    <Loading></Loading>-->
     <!-- banner -->
     <div class="banner" :style="cover">
       <div class="bgShade">
@@ -90,13 +90,13 @@
   import EasyTyper from "easy-typer-js";
   import { favoriteQuestion, getCategoryAndQuestionList, getFavoriteQuestionList } from "../../api";
   import hljs from "../../plugins/hightLight/index";
-  import Loading from "@/components/loading/loading";
+  // import Loading from "@/components/loading/loading";
 
 
   export default {
-    components: {
+/*    components: {
       Loading
-    },
+    },*/
     created() {
       this.getQuestionList();
       this.changeHitokoto();
@@ -379,7 +379,7 @@
     /* 一言文字格式调整 */
     .banner-intro {
         font-size: 1.1rem;
-        font-family: 'STXingkai', serif !important;
+        font-family: 'STXingkai', 'pgz', serif !important;
         max-width: 80%;
         margin: 0.6rem auto;
     }
@@ -412,7 +412,7 @@
         font-size: 1.2rem;
         margin-bottom: 5px;
         color: #5794F7;
-        font-family: 'STXingkai', serif !important;
+        font-family: 'STXingkai', 'pgz', serif !important;
     }
 
     /* 中间标题 */
@@ -483,6 +483,29 @@
 
     ::v-deep .el-popper[x-placement^=bottom] .popper__arrow{
         margin: auto;
+    }
+
+    /*  悬浮按钮，用于显示题目目录  */
+    .float-drag-button {
+        position: absolute;
+        right: 0;
+        top: -30px;
+        z-index: 6666;
+        padding: 5px;
+        width: 40px;
+        opacity: 0.6;
+        background-color: #38abab;
+        border-radius: 8px 0px 0px 8px;
+        box-shadow: 0px 2px 15px 0px rgba(11, 45, 84, 0.2);
+        cursor: move;
+    }
+
+    /*  悬浮按钮，用于显示题目目录  */
+    .float-drag-button span {
+        font-size: 1.7rem;
+        color: #ffffff;
+        line-height: 24px;
+        user-select: none;
     }
 
 </style>
