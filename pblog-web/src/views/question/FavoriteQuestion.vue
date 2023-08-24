@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading></Loading>
+<!--    <Loading></Loading>-->
     <!-- banner -->
     <div class="banner" :style="cover">
       <div class="bgShade">
@@ -84,12 +84,12 @@
   import EasyTyper from "easy-typer-js";
   import { favoriteQuestion, getCategoryAndQuestionList, getFavoriteQuestionList } from "../../api";
   import hljs from "../../plugins/hightLight/index";
-  import Loading from "@/components/loading/loading";
+  // import Loading from "@/components/loading/loading";
 
   export default {
-    components: {
+/*    components: {
       Loading
-    },
+    },*/
     created() {
       this.getQuestionList();
       this.changeHitokoto();
@@ -314,7 +314,7 @@
     /* 一言文字格式调整 */
     .banner-intro {
         font-size: 1.5rem;
-        font-family: 'STXingkai', serif !important
+        font-family: 'STXingkai', 'pgz', serif !important
     }
 
     /* 主区域样式 */
@@ -357,7 +357,7 @@
         font-weight: 600;
         margin: 5px 15px;
         color: #5794F7;
-        font-family: 'STXingkai', serif !important;
+        font-family: 'STXingkai', 'pgz', serif !important;
     }
 
     /* 参考答案 */
@@ -366,7 +366,7 @@
         font-weight: 600;
         margin-bottom: 5px;
         color: #5794F7;
-        font-family: 'STXingkai', serif !important;
+        font-family: 'STXingkai', 'pgz', serif !important;
     }
 
     /* 侧边栏标题 */
