@@ -1,7 +1,9 @@
 @font-face {
     font-family: 'pgz';
     /* 字体名自定义即可 */
-    src: url('https://cdn.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/font/ZhuZiAWan.woff2');
+    src: url('https://cdn.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/font/ZhuZiAWan.woff2'),
+         url('https://fastly.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/font/ZhuZiAWan.woff2'),
+         url('https://gcore.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/font/ZhuZiAWan.woff2');
     /* 字体文件路径 */
     font-display: swap;
 }
