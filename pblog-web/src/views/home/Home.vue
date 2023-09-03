@@ -425,7 +425,7 @@
             id: null,
             name: "最新",
             icon: "el-icon-news",
-            desc: "create_time"
+            desc: ""
           }
         ],
         rules: {
