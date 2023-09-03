@@ -670,13 +670,12 @@
       span {
         font-size: 16px;
         text-decoration: none;
-        margin-left: 10px;
+        margin-left: 13px;
         padding: 5px;
         display: inline-block;
         margin-bottom: 10px;
         border-radius: 6px;
         color: #fff;
-		cursor: pointer;
         transition: all .3s;
 
         &:hover {
