@@ -2,7 +2,7 @@
 body {
   cursor: url(https://fastly.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/img/default.cur), default;
 }
-a:hover, button:hover, img:hover, .onPage:hover, .bulletin:hover {
+a:hover, button:hover, img:hover, .onPage:hover, .bulletin:hover, .tag_container .tag span:hover  {
   cursor: url(https://fastly.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/img/pointer.cur), pointer;
 }
 code:hover {
