@@ -333,7 +333,7 @@
         overflow: auto;
         /*吸顶，跟随主屏幕滚动*/
         position: sticky !important;
-        top: 50px;
+        top: 20px;
     }
 
     /* 数字标号样式 */
