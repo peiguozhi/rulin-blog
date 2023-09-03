@@ -262,22 +262,41 @@
                       <div id="he-plugin-standard"></div>
                     </v-card>-->
           <!-- 网站信息 -->
-          <v-card class="blog-card animated zoomIn mt-5">
-            <div class="web-info-title">
-              标签云
-            </div>
-            <div class="web-info">
-              <svg :height="height" :width="width" style="text-align: center;" @mousemove="listener($event)">
-                <router-link
-                  v-for="(tag,index) in tags"
-                  :key="tag.text.id"
-                  :to="'/tags/' + tag.text.id"
-                >
-                  <text :x="tag.x" :y="tag.y" :font-size="20 * (600/(600-tag.z))" :fill-opacity="((400+tag.z)/600)"
-                        :fill="colors[index]">{{ tag.text.name }}
-                  </text>
-                </router-link>
+          <v-card class="blog-card animated zoomIn mt-5 tag_container">
+            <!--            <div class="web-info-title">
+                          标签云
+                        </div>
+                        <div class="web-info">
+                          <svg :height="height" :width="width" style="text-align: center;" @mousemove="listener($event)">
+                            <router-link
+                              v-for="(tag,index) in tags"
+                              :key="tag.text.id"
+                              :to="'/tags/' + tag.text.id"
+                            >
+                              <text :x="tag.x" :y="tag.y" :font-size="20 * (600/(600-tag.z))" :fill-opacity="((400+tag.z)/600)"
+                                    :fill="colors[index]">{{ tag.text.name }}
+                              </text>
+                            </router-link>
+                          </svg>
+                        </div>-->
+            <div class="clearfix">
+              <svg t="1693669114247" class="icon" viewBox="0 0 1024 1024"
+                   xmlns="http://www.w3.org/2000/svg" p-id="15154" width="18" height="18">
+                <path
+                  d="M533 1024l-147.7-84.8-136.4 78.3h-11.3c-17.3 0-34.2-3.4-50.1-10.1-15.3-6.5-29.1-15.7-40.8-27.6-11.7-11.7-21-25.5-27.5-40.8-6.7-15.9-10.1-32.7-10.1-50.1V128.5c0-17.4 3.4-34.2 10.1-50.1 6.5-15.3 15.8-29.1 27.6-40.8 11.7-11.8 25.5-21 40.8-27.5C203.3 3.4 220.2 0 237.5 0h590.9c17.3 0 34.2 3.4 50.1 10.1 15.3 6.5 29.1 15.7 40.8 27.6 11.7 11.7 21 25.5 27.5 40.8 6.7 15.9 10.1 32.7 10.1 50.1V889c0 17.4-3.4 34.2-10.1 50.1-6.5 15.3-15.8 29.1-27.6 40.8-11.7 11.8-25.5 21-40.8 27.5-15.8 6.7-32.7 10.1-50 10.1h-11.3l-136.4-78.3L533 1024z m147.7-182.6l157.2 90.3c2.5-0.6 5-1.4 7.5-2.4 5.2-2.2 9.9-5.4 13.9-9.4 4.1-4.1 7.2-8.7 9.4-14 2.3-5.3 3.4-11.1 3.4-17V128.5c0-5.9-1.1-11.7-3.4-17-2.2-5.2-5.4-9.9-9.4-13.9-4.1-4.1-8.7-7.2-13.9-9.4-5.4-2.3-11.1-3.4-17-3.4H237.5c-5.9 0-11.6 1.1-17 3.4-5.2 2.2-9.9 5.4-13.9 9.4-4.1 4.1-7.2 8.7-9.4 14-2.3 5.3-3.4 11.1-3.4 17V889c0 5.9 1.1 11.7 3.4 17 2.2 5.2 5.4 9.9 9.4 13.9 4.1 4.1 8.7 7.2 13.9 9.4 2.4 1 4.9 1.8 7.5 2.4l157.2-90.3L533 926.2l147.7-84.8z"
+                  fill="#3688FF" p-id="15155"></path>
+                <path
+                  d="M490.6 310.9H321c-23.4 0-42.4-19-42.4-42.4s19-42.4 42.4-42.4h169.6c23.4 0 42.4 19 42.4 42.4s-19 42.4-42.4 42.4z m211.9 176.7H321c-23.4 0-42.4-19-42.4-42.4s19-42.4 42.4-42.4h381.6c23.4 0 42.4 19 42.4 42.4-0.1 23.4-19 42.4-42.5 42.4z"
+                  fill="#5F6379" p-id="15156"></path>
               </svg>
+              <span class="tags_wall"> 标签墙 </span>
+              <a href="/tags" class="more">更多</a>
+            </div>
+            <div class="tag">
+                <span @click="handleTagClike(item.id)" :style="{ backgroundColor: item.color }"
+                      class="item" v-for="(item, index) in tags" :key="index">
+                    {{ item.name }}
+                </span>
             </div>
           </v-card>
           <!-- 网站信息 -->
@@ -324,26 +343,11 @@
     created() {
       this.init();
       this.timer = setInterval(this.runTime, 1000);
-      this.changeColors();
       // 初始化文章列表
       this.onPage();
       this.fetchcategoryBookList();
-      //初始化标签位置
-      let tags = [];
-      getTags().then(res => {
-        for (let i = 0; i < res.data.length; i++) {
-          let tag = {};
-          let k = -1 + (2 * (i + 1) - 1) / res.data.length;
-          let a = Math.acos(k);
-          let b = a * Math.sqrt(res.data.length * Math.PI);
-          tag.text = res.data[i];
-          tag.x = this.CX + this.RADIUS * Math.sin(a) * Math.cos(b);
-          tag.y = this.CY + this.RADIUS * Math.sin(a) * Math.sin(b);
-          tag.z = this.RADIUS * Math.cos(a);
-          tags.push(tag);
-        }
-      });
-      this.tags = tags;
+      //初始化标签
+      this.getTagWall();
     },
     destroyed() {
       // 销毁监听
@@ -353,10 +357,6 @@
       clearInterval(this.heartBeat);
     },
     mounted: function() {
-      setInterval(() => {
-        this.rotateX(this.speedX);
-        this.rotateY(this.speedY);
-      }, 17);
       window.WIDGET = {
         "CONFIG": {
           "layout": "2",
@@ -384,13 +384,7 @@
     },
     data: function() {
       return {
-        width: 260,//svg宽度
-        height: 230,//svg高度
-        RADIUS: 80,//球的半径
-        speedX: Math.PI / 360,//球一帧绕x轴旋转的角度
-        speedY: Math.PI / 360,//球-帧绕y轴旋转的角度
         tags: [],
-        colors: [],//存储颜色
         path: process.env.VUE_APP_WEBSOCKET_API,
         socket: "",
         onlineCount: 0,
@@ -450,41 +444,6 @@
     },
 
     methods: {
-      rotateX(angleX) {
-        var cos = Math.cos(angleX);
-        var sin = Math.sin(angleX);
-        for (let tag of this.tags) {
-          var y1 = (tag.y - this.CY) * cos - tag.z * sin + this.CY;
-          var z1 = tag.z * cos + (tag.y - this.CY) * sin;
-          tag.y = y1;
-          tag.z = z1;
-        }
-      },
-      rotateY(angleY) {
-        var cos = Math.cos(angleY);
-        var sin = Math.sin(angleY);
-        for (let tag of this.tags) {
-          var x1 = (tag.x - this.CX) * cos - tag.z * sin + this.CX;
-          var z1 = tag.z * cos + (tag.x - this.CX) * sin;
-          tag.x = x1;
-          tag.z = z1;
-        }
-      },
-      listener(event) {//响应鼠标移动
-        var x = event.clientX - this.CX;
-        var y = event.clientY - this.CY;
-        this.speedX = x * 0.0001 > 0 ? Math.min(this.RADIUS * 0.00002, x * 0.0001) : Math.max(-this.RADIUS * 0.00002, x * 0.0001);
-        this.speedY = y * 0.0001 > 0 ? Math.min(this.RADIUS * 0.00002, y * 0.0001) : Math.max(-this.RADIUS * 0.00002, y * 0.0001);
-      },
-      changeColors() { //随机变色
-        for (var i = 0; i < 30; i++) {
-          var r = Math.floor(Math.random() * 256);
-          var g = Math.floor(Math.random() * 256);
-          var b = Math.floor(Math.random() * 256);
-          this.colors[i] = "rgb(" + r + "," + g + "," + b + ")";
-        }
-      },
-
       screenshot() {
         this.$toast({ type: "error", message: "敬请期待!" });
       },
@@ -525,7 +484,6 @@
           this.socket.onmessage = this.getMessage;
         }
         this.changeHitokoto();
-
       },
       // 一言Api进行打字机循环输出效果  by  程序儒  2023年4月11日
       initTyped(input, fn, hooks) {
@@ -592,10 +550,31 @@
           this.pages = res.data.pages;
         });
       },
+      getTagWall() {
+        getTags().then(res => {
+          this.tags = res.data.sort(() => 0.5 - Math.random()).slice(0, 16);
+          for (let i = 0; i < this.tags.length; i++) {
+            this.$set(this.tags[i], "color", this.randomColor());
+          }
+        });
+      },
+      handleTagClike(id) {
+        this.$router.push({ path: "/tags/"+id})
+      },
       fetchcategoryBookList() {
         featchCategoryBook().then(res => {
           this.categoryBookList.push(...res.data);
         });
+      },
+      randomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        do {
+          for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+        } while (color === '#FFFFFF' || color === '#000000');
+        return color;
       },
       handleTabClick(tab) {
         this.articleList = [];
@@ -626,20 +605,6 @@
       }
     },
     computed: {
-      CX() {
-        return this.width / 2;
-      },
-      CY() {
-        return this.height / 2;
-      },
-      /*      isRight() {
-              return function(index) {
-                if (index % 2 === 0) {
-                  return "article-cover left-radius";
-                }
-                return "article-cover right-radius";
-              };
-            },*/
       blogInfo() {
         return this.$store.state.blogInfo;
       },
@@ -666,14 +631,61 @@
     font-size: 20px;
     font-weight: 500;
   }
+
   ::v-deep .el-tabs {
     width: 100%;
   }
+
   ::v-deep .el-tabs__nav-scroll {
     display: flex;
     justify-content: center;
   }
 
+  .tag_container {
+
+    .clearfix {
+      font-size: 15px;
+
+      .tags_wall {
+        margin-left: 8px;
+      }
+
+      .icon {
+        float: left;
+        margin-top: 6px;
+      }
+
+      .more {
+        float: right;
+        margin-right: 10px;
+        text-decoration: none;
+      }
+    }
+
+    .tag {
+      height: auto;
+      margin-top: 10px;
+      line-height: 1.2;
+
+      span {
+        font-size: 16px;
+        text-decoration: none;
+        margin-left: 10px;
+        padding: 5px;
+        display: inline-block;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        color: #fff;
+		cursor: pointer;
+        transition: all .3s;
+
+        &:hover {
+          border-radius: 0;
+        }
+      }
+    }
+
+  }
 
 </style>
 
