@@ -778,7 +778,7 @@
         }
 
         .home-container {
-            max-width: 65%;
+            max-width: 75%;
             margin: calc(100vh - 48px) auto 28px auto;
             padding: 0 5px;
         }
