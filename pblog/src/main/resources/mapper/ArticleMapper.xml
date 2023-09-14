@@ -94,9 +94,25 @@
     </select>
 
 
-
     <select id="selectPrimaryKeyById" resultType="com.rulin.vo.ArticleInfoVO">
-        select * from b_article where id=#{id}
+        SELECT id,
+               user_id,
+               category_id,
+               title,
+               avatar,
+               content_md,
+               is_secret,
+               is_stick,
+               is_publish,
+               is_original,
+               original_url,
+               quantity,
+               remark,
+               create_time,
+               keywords,
+               update_time
+        FROM b_article
+        WHERE id = #{id}
     </select>
 
     <select id="selectPreviewPage" resultType="com.rulin.vo.ArticlePreviewVO">
