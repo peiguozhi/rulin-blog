@@ -29,9 +29,9 @@ public class ArticleInfoVO {
      */
     private String avatar;
     /**
-     * 内容
+     * 内容  2023年9月8日 删除 文章html内容 优化响应速度
      */
-    private String content;
+    // private String content;
     /**
      * 文章内容MD版
      */
@@ -89,12 +89,18 @@ public class ArticleInfoVO {
      */
     private LatestArticleVO nextArticle;
     /**
-     * 推荐
+     * 推荐  2023年9月8日 取消推荐内容
      */
-    private List<LatestArticleVO> recommendArticleList = new ArrayList<>();
+    // private List<LatestArticleVO> recommendArticleList = new ArrayList<>();
     /**
      * 点赞量
      */
     private Integer likeCount;
+
+
+    /**
+     * 笔记分类文章列表
+     */
+    private List<ArticleBookVO> articleBookList = new ArrayList<>();
 
 }
