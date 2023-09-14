@@ -370,9 +370,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, BlogArticle> 
         LatestArticleVO nextArticle = baseMapper.getNextOrLastArticle(id, 1, PUBLISH.code, categoryId);
         blogArticle.setNextArticle(nextArticle);
 
-        //相关推荐
-        List<LatestArticleVO> recommendArticleList = baseMapper.listRecommendArticles(id);
-        blogArticle.setRecommendArticleList(recommendArticleList);
+        //相关推荐 2023年9月8日 取消文章推荐
+/*        List<LatestArticleVO> recommendArticleList = baseMapper.listRecommendArticles(id);
+        blogArticle.setRecommendArticleList(recommendArticleList);*/
 
         // 封装点赞量和浏览量
         blogArticle.setLikeCount((Integer) redisService.hGet(RedisConstants.ARTICLE_LIKE_COUNT, blogArticle.getId().toString()));
