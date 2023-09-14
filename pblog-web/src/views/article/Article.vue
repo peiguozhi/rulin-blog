@@ -390,7 +390,7 @@ export default {
           id: 0,
           name: ""
         },
-        recommendArticleList: [],
+        // recommendArticleList: [],
         newestArticleList: [],
         articleBookList: []
       },
