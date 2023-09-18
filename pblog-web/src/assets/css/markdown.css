@@ -144,6 +144,7 @@
 
 .markdown-body strong {
   font-weight: bold;
+  font-size: 110%;
 }
 
 .markdown-body hr {
