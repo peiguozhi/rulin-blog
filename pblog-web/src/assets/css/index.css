@@ -2,7 +2,7 @@
 body {
   cursor: url(https://fastly.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/img/default.cur), default;
 }
-a:hover, button:hover, img:hover, .onPage:hover, .bulletin:hover, .tag_container .tag span:hover  {
+a:hover, button:hover, img:hover, .onPage:hover, .bulletin:hover, .tag_container .tag span:hover, .el-menu-item:hover {
   cursor: url(https://fastly.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/img/pointer.cur), pointer;
 }
 code:hover {
@@ -142,7 +142,7 @@ canvas {
 }
 
 p {
-  margin-bottom: 16px !important;
+  margin-bottom: 6px !important;
 }
 
 .login-container {
@@ -512,6 +512,7 @@ li a:hover {
 h1, h2, h3, h4, h5, h6 {
   /*color: #1f2d3d;*/
   color: #1976d2;
+  cursor: text;
   /*color: rgba(73, 177, 245, 0.8);*/
   /*margin: 20px 0 14px;*/
   /*font-weight: bold;*/
