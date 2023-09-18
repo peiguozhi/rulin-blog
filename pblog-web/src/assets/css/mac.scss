@@ -1,7 +1,10 @@
 /* 单行代码样式 */
-.markdown-body code {
-  background-color: #4483ea;
+.markdown-body p code, .markdown-body li code {
+  background-color: rgba(219, 215, 215, 0.4);
   font-family: 'Consolas', serif;
+  font-weight: bold;
+  padding: 0 3px;
+  color: #4c4948;
 }
 
 .markdown-body p {
@@ -16,13 +19,28 @@
 /* 无序列表位置调整 */
 .markdown-body ol, .markdown-body ul {
   padding-left: 2em !important;
+  cursor: text;
+}
+
+.markdown-body li:hover::marker {
+    color: #ff7242;
+}
+
+.markdown-body li:hover {
+  color: #ff7242;
+}
+
+.markdown-body li::marker {
+  color: #00a1d6;
+  font-weight: 600;
+  font-size: 1.05em;
 }
 
 pre.hljs {
   padding: 2em 0 0 40px !important;
   border-radius: 7px !important;
   position: relative;
-  font-size: 18px !important;
+  font-size: 17px !important;
   line-height: 24px !important;
   overflow: hidden !important;
   background: #1c1c1c !important;
