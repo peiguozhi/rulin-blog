@@ -162,7 +162,7 @@
     .about-content {
         word-break: break-word;
         line-height: 1.8;
-        font-size: 15px;
+        font-size: 18px;
         text-align: center;
     }
 
