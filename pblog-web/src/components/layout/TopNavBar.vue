@@ -143,7 +143,10 @@ export default {
       that.scrollTop = window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      if (that.scrollTop > 60) {
+      // 设置点击上一题，下一题不显示导航栏
+      if (that.scrollTop === 200){
+        that.navClass = "nav";
+      } else if (that.scrollTop > 60) {
         that.navClass = "nav-fixed";
       } else {
         that.navClass = "nav";
