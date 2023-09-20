@@ -70,7 +70,7 @@
       <!--   左边目录内容   -->
       <v-col md="2" :class="bookHide">
         <!-- 左侧内容  当前类型下笔记列表  -->
-        <v-card class="right-container" style="position: sticky; top: 20px;">
+        <v-card class="right-container">
           <div class="right-title">
             <i class="el-icon-s-management" style="font-size:18px" />
             <span style="margin-left:10px">{{ article.category.name }}</span>
@@ -81,7 +81,15 @@
               v-for="item of article.articleBookList"
               :key="item.id"
             >
-              <div class="content">
+              <div class="content" v-if="article.id === item.id" style="background-color: rgba(73, 177, 245, 0.3)">
+                <div class="content-title">
+                  <router-link :to="'/articles/' + item.id">
+                    {{ item.title }}
+                  </router-link>
+                </div>
+                <div class="content-time">{{ item.createTime | date }}</div>
+              </div>
+              <div class="content" v-else>
                 <div class="content-title">
                   <router-link :to="'/articles/' + item.id">
                     {{ item.title }}
@@ -718,7 +726,7 @@ export default {
 
 .article-content {
   word-break: break-word;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 2;
 }
 
@@ -961,14 +969,18 @@ hr {
 
 .right-container {
   padding: 20px 24px;
-  font-size: 18px;
+  font-size: 16px;
+  position: sticky;
+  top: 20px;
+  max-height: 90vh;
+  overflow: auto;
 }
 
 .right-title {
   display: flex;
   align-items: center;
   line-height: 2;
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 6px;
 }
 
