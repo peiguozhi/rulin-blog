@@ -632,6 +632,10 @@
     font-weight: 500;
   }
 
+  ::v-deep .el-tabs__item:hover {
+    cursor: url(https://fastly.jsdelivr.net/gh/peiguozhi/BLOG_SOURCE/img/pointer.cur), pointer;
+  }
+
   ::v-deep .el-tabs {
     width: 100%;
   }
@@ -770,6 +774,7 @@
             font-size: 1.5rem;
             font-family: 'STXingkai', 'pgz', serif !important;
             margin: 1rem auto;
+            cursor: text;
         }
 
         .blog-contact {
@@ -837,6 +842,7 @@
             font-family: 'STXingkai', 'pgz', serif !important;
             max-width: 80%;
             margin: 1rem auto;
+            cursor: text;
         }
 
         .blog-contact {
