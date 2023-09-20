@@ -382,6 +382,7 @@
         font-family: 'STXingkai', 'pgz', serif !important;
         max-width: 80%;
         margin: 0.6rem auto;
+        cursor: text;
     }
 
     /* 主区域样式 */
@@ -390,6 +391,11 @@
         width: 98%;
         margin: 140px auto 0 auto;
         padding: 10px 0;
+    }
+
+    /* 中间显示内容 */
+    .article-wrapper {
+        min-height: 80vh;
     }
 
     /* 数字标号样式 */
@@ -437,9 +443,10 @@
         /*margin-left: 15px;*/
         font-size: 1.1rem !important;
         display: block;
-        line-height: 25px;
+        line-height: 30px;
         height: initial;
-        white-space: pre-wrap;
+        white-space: normal;
+        margin-bottom: 10px;
     }
 
     #analysis {
