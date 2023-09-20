@@ -62,7 +62,8 @@
       <v-col md="3" cols="12" class="d-md-block d-none">
         <v-card class="side-container">
           <div class="side-title">问题列表</div>
-          <el-menu
+          <div class="side-content">
+            <el-menu
             :default-active="curIndex.toString()"
             active-text-color="#5794F7">
             <el-menu-item
@@ -73,6 +74,7 @@
               {{ index + 1 + "、" + item.quContent }}
             </el-menu-item>
           </el-menu>
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -187,7 +189,7 @@
             });
           }
           // 回到顶部
-          document.documentElement.scrollTop = 0;
+          document.documentElement.scrollTop = 200;
         });
       },
 
@@ -314,7 +316,8 @@
     /* 一言文字格式调整 */
     .banner-intro {
         font-size: 1.5rem;
-        font-family: 'STXingkai', 'pgz', serif !important
+        font-family: 'STXingkai', 'pgz', serif !important;
+        cursor: text;
     }
 
     /* 主区域样式 */
@@ -323,14 +326,17 @@
         margin: 120px auto 40px auto;
     }
 
+    /* 中间显示内容 */
+    .article-wrapper {
+        min-height: 80vh;
+    }
+
     /*侧边栏样式*/
     .side-container {
         padding-top: 10px;
         padding-left: 10px;
         padding-bottom: 15px;
-        font-size: 16px;
-        max-height: 800px;
-        overflow: auto;
+        font-size: 17px;
         /*吸顶，跟随主屏幕滚动*/
         position: sticky !important;
         top: 20px;
@@ -360,6 +366,12 @@
         font-family: 'STXingkai', 'pgz', serif !important;
     }
 
+    /* 侧边栏内容 */
+    .side-content {
+        overflow: auto;
+        max-height: 80vh;
+    }
+
     /* 参考答案 */
     .mid-title {
         font-size: 2rem;
@@ -373,7 +385,8 @@
     .mid-side-title {
         font-size: 1.5rem;
         font-weight: 600;
-        margin-bottom: 5px
+        margin-bottom: 5px;
+        cursor: text;
     }
 
     /* 左边目录列表 */
@@ -391,16 +404,18 @@
         /*margin-left: 15px;*/
         font-size: 1.1rem !important;
         display: block;
-        line-height: 25px;
+        line-height: 30px;
         height: initial;
-        white-space: pre-wrap;
+        white-space: normal;
+        margin-bottom: 10px;
     }
 
     .analysis-content {
         /*word-break: break-word;*/
         /*line-height: 1.8;*/
-        font-size: 18px;
-        /*text-align: center;*/
+        font-size: 17px;
+        height: 57vh;
+        overflow: auto;
     }
 
     /*滚动条设置*/
