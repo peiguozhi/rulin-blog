@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>rulin-plus-parent</artifactId>
+        <groupId>com.rulin</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../rulin-plus-parent</relativePath>
+    </parent>
+    <artifactId>rulin-plus-media</artifactId>
+    <name>rulin-plus-media</name>
+    <description>rulin-plus-media</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>rulin-plus-media-api</module>
+        <module>rulin-plus-media-service</module>
+        <module>rulin-plus-media-model</module>
+    </modules>
+</project>
