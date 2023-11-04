@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>xuecheng-plus-parent</artifactId>
+        <groupId>com.xuecheng</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../xuecheng-plus-parent</relativePath>
+    </parent>
+    <artifactId>xuecheng-plus-auth</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- Spring Boot 的 Spring Web MVC 集成 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!-- MySQL 驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- mybatis plus的依赖 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <!-- 排除 Spring Boot 依赖的日志包冲突 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Spring Boot 集成 Junit -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Spring Boot 集成 log4j2 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+        <!-- Spring Boot 集成 swagger -->
+        <dependency>
+            <groupId>com.spring4all</groupId>
+            <artifactId>swagger-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.2.2</version>
+                <configuration>
+                    <!--修改imageName节点的内容，改为私有仓库地址和端口，再加上镜像id和 TAG,我们要直接传到私服-->
+                    <!--配置最后生成的镜像名，docker images里的，我们这边取项目名:版本-->
+                    <!--<imageName>${project.artifactId}:${project.version}</imageName>-->
+                    <imageName>192.168.101.65:5000/${project.artifactId}:${project.version}</imageName>
+                    <!--也可以通过以下方式定义image的tag信息。 -->
+                    <!-- <imageTags>
+                         <imageTag>${project.version}</imageTag>
+                         &lt;!&ndash;build 时强制覆盖 tag，配合 imageTags 使用&ndash;&gt;
+                         <forceTags>true</forceTags>
+                         &lt;!&ndash;build 完成后，push 指定 tag 的镜像，配合 imageTags 使用&ndash;&gt;
+                         <pushImageTag>true</pushImageTag>
+                     </imageTags>-->
+                    <baseImage>java:8u20</baseImage>
+                    <maintainer>docker_maven docker_maven@email.com</maintainer>
+                    <workdir>/root</workdir>
+                    <cmd>["java", "-version"]</cmd>
+                    <!--来指明Dockerfile文件的所在目录，如果配置了dockerDirectory则忽略baseImage，maintainer等配置-->
+                    <!--<dockerDirectory>./</dockerDirectory>-->
+                    <!--2375是docker的远程端口，插件生成镜像时连接docker，这里需要指定docker远程端口-->
+                    <dockerHost>http://192.168.101.65:2375</dockerHost>
+                    <!--入口点，project.build.finalName就是project标签下的build标签下 的filename标签内容，testDocker-->
+                    <!--相当于启动容器后，会自动执行java -jar ...-->
+                    <entryPoint>["java", "-Dfile.encoding=utf-8","-jar", "/root/${project.build.finalName}.jar"]</entryPoint>
+                    <!--是否推送到docker私有仓库，旧版本插件要配置maven的settings文件。 -->
+                    <pushImage>true</pushImage>
+                    <registryUrl>192.168.101.65:5000</registryUrl>  <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
+                    <resources>
+                        <resource>
+                            <targetPath>/root</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <!--把哪个文件上传到docker，相当于Dockerfile里的add app.jar /-->
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
