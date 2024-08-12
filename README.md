@@ -26,7 +26,6 @@
 
 ## 项目介绍
 
-> 文件夹rulin-plus-zaixian 下的文件与本项目无关，为自动提交，请忽略。
 
 **儒林小栈( pblog )**，一个**基于微服务架构的前后端分离博客系统**。前端使用 **Vue + ElementUi**。后端使用 **SpringBoot + Mybatis-plus**进行开发，使用 **sa-token** 做登录验证和权限校验，使用 **ElasticSearch**作为全文检索服务，文件支持**上传本地、七牛云 和 阿里云OSS**
 
